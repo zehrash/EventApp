@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">EventApp</string>
     <string name="email">Email</string>
-    <string name="name">Name</string>
+    <string name="fullName">Full name</string>
     <string name="id" />
+    <string name="name">Name</string>
+    <string name="password">Password</string>
+    <string name="rgister">Rgister</string>
+    <string name="register">Register</string>
 </resources>
