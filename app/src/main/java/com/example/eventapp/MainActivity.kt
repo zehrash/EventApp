@@ -18,10 +18,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        login_button.setOnClickListener {
+        login_button.setOnClickListener() {
+
             val intent = Intent(this, FacebookSignInActivity::class.java)
+
             startActivity(intent)
         }
-        login_button.setReadPermissions("email","public_profile")//idk where is this supposed to be
     }
 }

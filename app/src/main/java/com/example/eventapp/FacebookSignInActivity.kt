@@ -1,70 +1,51 @@
 package com.example.eventapp
 
-import android.R
+//import com.facebook.login.widget.LoginButton
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
-import com.example.eventapp.R.layout.activity_facebook_sign_in
-import com.facebook.AccessToken
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
-import com.google.firebase.FirebaseError
 import com.google.firebase.auth.*
 import com.squareup.picasso.Picasso
-
-
 import kotlinx.android.synthetic.main.activity_facebook_sign_in.*
-import kotlinx.android.synthetic.main.activity_register.*
-import java.util.*
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class FacebookSignInActivity : AppCompatActivity() {
 
     companion object {
-        private const val Tag: String = "FacebookAuthentication"
+        const val Tag: String = "FacebookAuthentication"
     }
 
     private lateinit var auth: FirebaseAuth
     private lateinit var logo: ImageView
     private lateinit var authStateListener: FirebaseAuth.AuthStateListener
     lateinit var callbackManager: CallbackManager
+    private lateinit var textView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(activity_facebook_sign_in)
-
-
+        setContentView(com.example.eventapp.R.layout.activity_facebook_sign_in)
         callbackManager = CallbackManager.Factory.create(); //gives success or failure result
         auth = FirebaseAuth.getInstance()
-        val textView: TextView = findViewById(com.example.eventapp.R.id.text_id)
-        val logo: ImageView = findViewById(com.example.eventapp.R.id.imageView)
+        login_button.setReadPermissions("email", "public_profile")
 
 
-
-        val EMAIL = "email"
-
-        val loginButton = findViewById(com.example.eventapp.R.id.login_button) as LoginButton
-        loginButton.registerCallback(callbackManager, object : FacebookCallback<LoginResult>)
-        // If you are using in a fragment, call loginButton.setFragment(this);
+        logo = findViewById(R.id.imageView)
 
         // Callback registration
-        // If you are using in a fragment, call loginButton.setFragment(this);
-
-        // Callback registration
-        loginButton.registerCallback(callbackManager, object : FacebookCallback<LoginResult?> {
+        login_button.registerCallback(callbackManager, object : FacebookCallback<LoginResult?> {
             override fun onSuccess(loginResult: LoginResult?) {
                 Log.d(Tag, "onSuccess$loginResult")
                 handleFacebookToken(loginResult!!.accessToken)
@@ -80,10 +61,10 @@ class FacebookSignInActivity : AppCompatActivity() {
         })
     }
 
-    fun handleFacebookToken(getAccessToken: AccessToken) {
-        Log.d(Tag, "handleFacebookToken$getAccessToken")
+    fun handleFacebookToken(token: AccessToken) {
+        Log.d(Tag, "handleFacebookToken$token")
         val credentials: AuthCredential =
-            FacebookAuthProvider.getCredential(getAccessToken.toString())
+            FacebookAuthProvider.getCredential(token.token)
         auth.signInWithCredential(credentials)
             .addOnCompleteListener(this, object : OnCompleteListener<AuthResult> {
                 override fun onComplete(task: Task<AuthResult>) {
@@ -96,7 +77,7 @@ class FacebookSignInActivity : AppCompatActivity() {
                         // If sign in fails, display a message to the user.
                         Log.w(Tag, "signInWithCredential:failure", task.exception)
                         Toast.makeText(
-                            this@FacebookSignInActivity,
+                            baseContext,
                             "Authentication Failed",
                             Toast.LENGTH_SHORT
                         ).show()
@@ -104,6 +85,7 @@ class FacebookSignInActivity : AppCompatActivity() {
                     }
                 }
             })
+
         authStateListener = FirebaseAuth.AuthStateListener {
             fun onAuthStateChanged(firebaseAuth: FirebaseAuth) {
                 val user = firebaseAuth.currentUser
@@ -118,7 +100,6 @@ class FacebookSignInActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
         callbackManager.onActivityResult(requestCode, resultCode, data)
         super.onActivityResult(requestCode, resultCode, data)
     }
@@ -126,14 +107,14 @@ class FacebookSignInActivity : AppCompatActivity() {
     private fun updateUI(user: FirebaseUser?) {
         if (user != null) {
             textView.text = user.displayName
-            if (user.photoUrl != null) {
-                var photoURl: String = user.photoUrl.toString()
-                photoURl = "$photoURl?type=large"
-                Picasso.get().load(photoURl).into(logo)
-            }
+            //if (user.photoUrl != null) {
+               // var photoURl: String = user.photoUrl.toString()
+               // photoURl = "$photoURl?type=large"
+                //Picasso.get().load(photoURl).into(imageView)
+            //}
         } else {
-            textView.text = ""
-            logo.setImageResource(com.example.eventapp.R.drawable.logo)//add image to drawable
+           // textView.text = ""
+            imageView.setImageResource(R.drawable.logo)
         }
     }
 
@@ -146,5 +127,4 @@ class FacebookSignInActivity : AppCompatActivity() {
         super.onStop()
         auth.removeAuthStateListener(authStateListener)
     }
-
 }
