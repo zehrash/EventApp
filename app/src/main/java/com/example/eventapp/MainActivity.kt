@@ -46,9 +46,10 @@ class MainActivity : AppCompatActivity() {
         //fb
         login_button.setReadPermissions("email", "public_profile")
         // auth = FirebaseAuth.getInstance()
-        //   FacebookSdk.sdkInitialize(applicationContext)
+        //
+        FacebookSdk.sdkInitialize(applicationContext)
 
-        val callbackManager = CallbackManager.Factory.create(); //gives success or failure result\
+
 
         logo = findViewById(R.id.imageView2)
         name = findViewById(R.id.textView2)

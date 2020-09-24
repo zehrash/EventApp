@@ -6,17 +6,20 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.facebook.AccessToken
+import com.facebook.Profile
+import com.facebook.login.widget.ProfilePictureView
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.*
 import com.squareup.picasso.Picasso
+import java.net.URL
 
 class FacebookClass(
     private var mContext: Context,
     private var textView: TextView,
     private var imageView: ImageView,
 
-) {
+    ) {
     companion object {
         const val Tag: String = "FacebookAuthentication"
     }
@@ -25,8 +28,7 @@ class FacebookClass(
 
     fun handleFacebookToken(token: AccessToken) {
         Log.d(Tag, "handleFacebookToken$token")
-        val credentials: AuthCredential =
-            FacebookAuthProvider.getCredential(token.token)
+        val credentials: AuthCredential = FacebookAuthProvider.getCredential(token.token)
         auth.signInWithCredential(credentials).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 // Sign in success, update UI with the signed-in user's information
@@ -35,13 +37,9 @@ class FacebookClass(
                 updateUI(user)
             } else {
                 // If sign in fails, display a message to the user.
-                Log.w(
-                    Tag,
-                    "signInWithCredential:failure",
-                    task.exception
-                )
+                Log.w(Tag, "signInWithCredential:failure", task.exception)
                 Toast.makeText(mContext, "Authentication Failed", Toast.LENGTH_SHORT).show()
-                //  updateUI(null)
+                updateUI(null)
             }
         }
     }
@@ -56,9 +54,8 @@ class FacebookClass(
                 Picasso.get().load(photoURl).into(imageView)
             }
         } else {
-            // textView.text = ""
+            textView.text = ""
             imageView.setImageResource(R.drawable.logo)
         }
     }
-
 }
