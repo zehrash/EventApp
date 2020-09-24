@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.annotation.NonNull
 
 import androidx.appcompat.app.AppCompatActivity
 import com.facebook.*
@@ -28,10 +29,12 @@ class MainActivity : AppCompatActivity() {
     private var callbackManager =
         CallbackManager.Factory.create(); //gives success or failure result
     private lateinit var authStateListener: FirebaseAuth.AuthStateListener
+    private lateinit var accessTokenTracker: AccessTokenTracker
     private lateinit var logo: ImageView
     private lateinit var name: TextView
     private lateinit var fbController: FacebookClass
-    private lateinit var auth: FirebaseAuth
+
+    // private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var googleController: GoogleClass
     private lateinit var signOutButton: Button
@@ -40,14 +43,19 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        var callbackManager = CallbackManager.Factory.create(); //gives success or failure result\
+        //fb
         login_button.setReadPermissions("email", "public_profile")
+        // auth = FirebaseAuth.getInstance()
+        //   FacebookSdk.sdkInitialize(applicationContext)
+
+        val callbackManager = CallbackManager.Factory.create(); //gives success or failure result\
+
         logo = findViewById(R.id.imageView2)
         name = findViewById(R.id.textView2)
-        signOutButton = button2
         fbController = FacebookClass(baseContext, name, logo)
 
-        auth = FirebaseAuth.getInstance()
+        //google
+        signOutButton = button2
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
@@ -65,22 +73,25 @@ class MainActivity : AppCompatActivity() {
             signOutButton.visibility = View.INVISIBLE
         }
 
-        login_button.registerCallback(callbackManager, object : FacebookCallback<LoginResult?> {
-            override fun onSuccess(loginResult: LoginResult?) {
-                Log.d(Tag, "onSuccess$loginResult")
-                fbController.handleFacebookToken(loginResult!!.accessToken)
-            }
+        //fb
+        login_button.setOnClickListener() {
+            login_button.registerCallback(callbackManager, object : FacebookCallback<LoginResult?> {
+                override fun onSuccess(loginResult: LoginResult?) {
+                    Log.d(Tag, "onSuccess$loginResult")
+                    fbController.handleFacebookToken(loginResult!!.accessToken)
+                }
 
-            override fun onCancel() {
-                Log.d(Tag, "onCancel")
-            }
+                override fun onCancel() {
+                    Log.d(Tag, "onCancel")
+                }
 
-            override fun onError(exception: FacebookException) {
-                Log.d(Tag, "onError")
-            }
-        })
+                override fun onError(exception: FacebookException) {
+                    Log.d(Tag, "onError")
+                }
+            })
+        }
         authStateListener = object : FirebaseAuth.AuthStateListener {
-            override fun onAuthStateChanged(firebaseAuth: FirebaseAuth) {
+            override fun onAuthStateChanged(@NonNull firebaseAuth: FirebaseAuth) {
                 val user = firebaseAuth.currentUser
                 if (user != null) {
                     fbController.updateUI(user)
@@ -90,15 +101,18 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-        val accessTokenTracker = object : AccessTokenTracker() {
-            override fun onCurrentAccessTokenChanged(oldAccessToken: AccessToken?, currentAccessToken: AccessToken?
+        accessTokenTracker = object : AccessTokenTracker() {
+            override fun onCurrentAccessTokenChanged(
+                oldAccessToken: AccessToken?,
+                currentAccessToken: AccessToken?
             ) {
                 if (currentAccessToken == null) {
-                    auth.signOut()
+                    fbController.auth.signOut()
                 }
             }
         }
     }
+
 
     private fun signIn() {
         val signInIntent = googleSignInClient.signInIntent
@@ -119,6 +133,7 @@ class MainActivity : AppCompatActivity() {
 
     public override fun onStart() {
         super.onStart()
+
         fbController.auth.addAuthStateListener(authStateListener)
     }
 
