@@ -40,7 +40,7 @@ class GoogleClass(
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
                     // ...
                     Toast.makeText(context, "Authentication Failed.", Toast.LENGTH_SHORT).show()
-                    //  updateUI(null)
+                     updateUI(null)
                 }
             }
     }

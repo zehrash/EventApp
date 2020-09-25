@@ -1,6 +1,7 @@
 package com.example.eventapp
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
@@ -35,6 +36,7 @@ class FacebookClass(
                 Log.d(Tag, "signInWithCredential:success")
                 val user = auth.currentUser
                 updateUI(user)
+
             } else {
                 // If sign in fails, display a message to the user.
                 Log.w(Tag, "signInWithCredential:failure", task.exception)
