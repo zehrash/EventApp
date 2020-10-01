@@ -1,4 +1,7 @@
 package com.example.eventapp
+
+import kotlinx.serialization.Serializable
+
 @Serializable
 data class DataClass (
     val datetimeLocal: String,
