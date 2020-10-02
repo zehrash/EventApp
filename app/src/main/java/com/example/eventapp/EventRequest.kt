@@ -10,20 +10,19 @@ import java.io.IOException
 
 class EventRequest(val apiKey: String, val client: OkHttpClient) {
 
+    var eventMap: MutableMap<String, MutableList<JsonObject>> = mutableMapOf()
 
     companion object {
         private const val apiUrl: String = "https://api.seatgeek.com/2"
     }
 
-    fun getEventByVenue(type: String, keyword: String): MutableList<JsonObject> {
-        //val url = apiUrl + "/events?client_id=" + apiKey
-
+    fun getEventByVenue(type: String, keyword: String)/*: MutableList<JsonObject>*/ {
         //val url ="https://api.seatgeek.com/2/events/801255?client_id=MjEyNjg2NzZ8MTYwMDA2NTUyOC41OTc4NTI"
         val url: String = apiUrl + "/events?venue." + "${type}=${keyword}&client_id=" + apiKey
 
         val request: Request = Request.Builder().url(url).build()
         var event: JsonObject
-        var title: String = ""
+
         val call = client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 println("Failed to execute task")
@@ -33,36 +32,25 @@ class EventRequest(val apiKey: String, val client: OkHttpClient) {
                 val body = response.body()?.string()
                 val gson = GsonBuilder().setPrettyPrinting().create()
 
-                //val mutableListTutorialType = object : TypeToken<MutableList<DataClass>>() {}.type
+                event = gson.fromJson(body, JsonObject::class.java).asJsonObject
 
-                event = gson.fromJson(body, ArrayList<JsonObject::class.java>).asJsonObject.
-                println(event)
-                val temp = event.keySet().iterator()
-                while (temp.hasNext()) {
-                    val key = temp.next()
-                    val value = event.get(key)
-                    if (key == "title") {
-                        title = value.toString()
+                for (obj in event.get("events").asJsonArray) {
+                    val newObj = gson.fromJson(obj, JsonObject::class.java).asJsonObject
+                    if (newObj.keySet().contains("title")) {
+                        val title: String = newObj.get("title").toString()
+                        if (!eventMap.containsKey(title)) {
+                            eventMap.put(title, mutableListOf(JsonObject()))
+                            eventMap.get(title)?.add(newObj)
+                        }else{
+                            eventMap.get(title)?.add(newObj)
+
+                        }
                     }
+                }
+                for ((k, v) in eventMap) {
+                    println("$k $v")
                 }
             }
         })
-        return event
     }
-/*
-    fun getEventByVenue(type: String, keyword:String): MutableList<DataClass>{
-        val url: String = apiUrl+ "/events?venue." + "${type}=${keyword}&client_id=" + apiKey
-
-        val request: Request= Request.Builder().url(url).build()
-        val call = client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                println("Failed to exec task")
-            }
-
-            override fun onResponse(call: Call, response: Response) {
-               val body = response.body()?.string()
-            }
-        }
-
-*/
 }

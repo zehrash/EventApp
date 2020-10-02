@@ -15,7 +15,9 @@ class TestActivity : AppCompatActivity() {
 
         eventButton.setOnClickListener(){
             val er=EventRequest(apiKey,client)
-            er.getEvent()
+          //  TODO("make enum class for type of venue search")
+
+            er.getEventByVenue("state","NY")
 
         }
         //UI for calling different functions
