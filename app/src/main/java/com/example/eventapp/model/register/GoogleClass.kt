@@ -1,4 +1,4 @@
-package com.example.eventapp
+package com.example.eventapp.model.register
 
 import android.content.Context
 import android.content.Intent
@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
-import androidx.core.app.ActivityCompat.startActivityForResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient

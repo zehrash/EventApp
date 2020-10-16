@@ -1,19 +1,14 @@
-package com.example.eventapp
+package com.example.eventapp.model.register
 
 import android.content.Context
-import android.content.Intent
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import com.example.eventapp.R
 import com.facebook.AccessToken
-import com.facebook.Profile
-import com.facebook.login.widget.ProfilePictureView
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.*
 import com.squareup.picasso.Picasso
-import java.net.URL
 
 class FacebookClass(
     private var mContext: Context,

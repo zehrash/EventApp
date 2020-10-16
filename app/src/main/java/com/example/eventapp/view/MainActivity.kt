@@ -1,4 +1,4 @@
-package com.example.eventapp
+package com.example.eventapp.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,8 +8,10 @@ import android.widget.*
 import androidx.annotation.NonNull
 
 import androidx.appcompat.app.AppCompatActivity
+import com.example.eventapp.R
+import com.example.eventapp.model.register.FacebookClass
+import com.example.eventapp.model.register.GoogleClass
 import com.facebook.*
-import com.facebook.appevents.codeless.ViewIndexer
 import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -136,7 +138,7 @@ class MainActivity : AppCompatActivity() {
         } else {
             callbackManager.onActivityResult(requestCode, resultCode, data)
             super.onActivityResult(requestCode, resultCode, data)
-            val intent = Intent(this@MainActivity,TestActivity::class.java)
+            val intent = Intent(this@MainActivity, TestActivity::class.java)
             startActivity(intent)
         }
     }

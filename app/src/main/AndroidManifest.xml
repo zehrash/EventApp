@@ -15,8 +15,9 @@
         android:theme="@style/Theme.AppCompat.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:node="merge">
-        <activity android:name=".TestActivity"></activity>
-        <activity android:name=".SplashActivity">
+        <activity android:name=".view.OptionsActivity"></activity>
+        <activity android:name=".view.TestActivity" />
+        <activity android:name=".view.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,7 +25,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".view.MainActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
