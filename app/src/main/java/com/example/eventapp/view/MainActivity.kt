@@ -138,7 +138,7 @@ class MainActivity : AppCompatActivity() {
         } else {
             callbackManager.onActivityResult(requestCode, resultCode, data)
             super.onActivityResult(requestCode, resultCode, data)
-            val intent = Intent(this@MainActivity, TestActivity::class.java)
+            val intent = Intent(this@MainActivity, OptionsActivity::class.java)
             startActivity(intent)
         }
     }

@@ -15,6 +15,14 @@
     <string name="name2">name2</string>
     <string name="sign_out">Sign out</string>
     <string name="event">Event</string>
-
+    <string name="events">Events</string>
+    <string name="venue">venue</string>
+    <string name="performer">performer</string>
+    <string name="id_chip">Id</string>
+    <string name="country">COUNTRY</string>
+    <string name="state">State</string>
+    <string name="city">CITY</string>
+    <string name="search">Search</string>
+    <string name="city_state_country_id">City, State,Country, Id</string>
 
 </resources>

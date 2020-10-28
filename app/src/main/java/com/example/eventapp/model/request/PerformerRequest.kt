@@ -3,6 +3,7 @@ package com.example.eventapp.model.request
 import com.example.eventapp.model.data.DataInterface
 import com.example.eventapp.model.enumTypes.EnumTypeInt
 import com.example.eventapp.model.enumTypes.ReqType
+import com.example.eventapp.presenter.RequestFactory
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import okhttp3.*
@@ -18,7 +19,7 @@ class PerformerRequest(
 
     }
 
-    override fun getResultByType(type: EnumTypeInt, keyword: String): MutableList<DataInterface> {
+     fun getResultByType(type: EnumTypeInt, keyword: String): MutableList<DataInterface> {
         TODO("Not yet implemented")
     }
 

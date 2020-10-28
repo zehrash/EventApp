@@ -51,7 +51,7 @@ class EventRequest(
         return allEvents
     }
 
-    override fun getResultByType(type: EnumTypeInt, keyword: String): MutableList<DataInterface<EventRequest>> {
+     fun getResultByType(type: VenueType, keyword: String): MutableList<EventData> {
 
 
         val url: String =

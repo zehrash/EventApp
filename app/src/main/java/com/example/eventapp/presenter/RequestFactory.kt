@@ -1,13 +1,17 @@
-package com.example.eventapp.model.request
+package com.example.eventapp.presenter
 
 import com.example.eventapp.model.enumTypes.ReqType
+import com.example.eventapp.model.request.DataClass
+import com.example.eventapp.model.request.EventRequest
+import com.example.eventapp.model.request.PerformerRequest
+import com.example.eventapp.model.request.VenueRequest
 import okhttp3.OkHttpClient
 
 class RequestFactory {
     private val apiKey: String = "MjEyNjg2NzZ8MTYwMDA2NTUyOC41OTc4NTI"
     private val client = OkHttpClient()
 
-    fun getClass (type: ReqType) :DataClass? {
+    fun getClass (type: ReqType) : DataClass? {
         var req: DataClass? = null
 
         req = when (type) {

@@ -38,7 +38,7 @@ abstract class DataClass {
           where is the implementation of the method
      */
 
-    abstract fun getResultByType(type: EnumTypeInt, keyword: String): MutableList<DataInterface>
+//    abstract fun getResultByType(type: EnumTypeInt, keyword: String): MutableList<DataInterface>
 
     fun addToEventMap(event: JsonObject) {
         if (event.keySet().contains("title")) {
@@ -77,6 +77,8 @@ abstract class DataClass {
         lateinit var name: String
         lateinit var id: String
 
+
+
         if (event.keySet().contains("venue")) {
             val venueInfo = event.get("venue").asJsonObject
             for ((key, value) in venueInfo.entrySet()) {
@@ -94,9 +96,10 @@ abstract class DataClass {
 
     fun getEventInfo(event: JsonObject): EventData {
         val title: String = event.get("title").toString()
+        val id: String = event.get("id").toString()
         val venue: VenueData = getVenueInfo(event)
         val performer: PerformerData = getPerformerInfo(event)
-        return EventData(title, performer, venue, event)
+        return EventData(title, performer, venue, event, id)
     }
 
     fun showEventInfo(title: String) {
