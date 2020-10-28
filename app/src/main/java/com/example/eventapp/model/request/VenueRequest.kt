@@ -24,15 +24,20 @@ class VenueRequest(
 ) :
     DataClass() {
     //    enum class()
+    val venueList: MutableList<VenueData> = mutableListOf()
+    fun getVenueList(type: VenueType, keyword: String): MutableList<VenueData>? {
+
+    }
 
     fun findVenue() {
 
     }
 
     //type should be enum
-   fun getVenueByType(type: VenueType, keyword: String): MutableList<VenueData>? {
+    fun getVenueByType(type: VenueType, keyword: String): MutableList<VenueData>? {
         //https://api.seatgeek.com/2/venues?postal_code=90210
-        val url: String = "$apiUrl?${type.toString().toLowerCase(Locale.ROOT)}=$keyword&client_id=$apiKey"
+        val url: String =
+            "$apiUrl?${type.toString().toLowerCase(Locale.ROOT)}=$keyword&client_id=$apiKey"
         val request: Request = Request.Builder().url(url).build()
         var venues: JsonObject
         var venueList = mutableListOf<VenueData>()
@@ -55,7 +60,9 @@ class VenueRequest(
                         print(newObj.toString())
                         venueList.add(getVenueInfo(newObj))
                     }
+
                 }
+                venueList=
             }
         })
         return venueList
