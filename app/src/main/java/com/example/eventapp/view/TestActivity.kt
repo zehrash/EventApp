@@ -15,17 +15,18 @@ class TestActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test)
 
-        val list= intent.getParcelableArrayListExtra<VenueData>("list")
+        val list= intent.getStringExtra("venue")
         println(list)
+        text1.text=list
 
-
+/*
         for (venue in list!!) {
             text1.text = venue.name
             text2.text = venue.city
             text3.text = venue.id
             break
         }
-
+*/
 
     }
 

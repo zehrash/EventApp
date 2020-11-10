@@ -7,8 +7,8 @@ import com.example.eventapp.model.enumTypes.VenueType
 interface ContractViews {
 
     interface VenueView{
-        fun getVenueByType(type: VenueType,keyword: String):MutableList<VenueData>
-        fun getVenueByKeyword(keyword:String):VenueData
+        fun getVenue(type: VenueType,keyword: String)
+        fun displayResult(result: String)
     }
     interface EventView{
 

@@ -17,19 +17,24 @@ class OptionsActivity : AppCompatActivity() {
         eventButton.setOnClickListener {
 
             //change color on click
-            val intent = Intent(this, EventActivity::class.java).putExtra("type",ReqType.EVENT.toString())
+            val intent =
+                Intent(this, EventActivity::class.java).putExtra("type", ReqType.EVENT.toString())
             startActivity(intent)
 
         }
 
-        venueButton.setOnClickListener{
-            val intent = Intent(this, VenueActivity::class.java).putExtra("type",ReqType.VENUE.toString())
+        venueButton.setOnClickListener {
+            val intent =
+                Intent(this, VenueActivity::class.java).putExtra("type", ReqType.VENUE.toString())
             startActivity(intent)
 
         }
 
-        performerButton.setOnClickListener{
-            val intent = Intent(this, PerformerActivity::class.java).putExtra("type",ReqType.PERFORMER)
+        performerButton.setOnClickListener {
+            val intent = Intent(this, PerformerActivity::class.java).putExtra(
+                "type",
+                ReqType.PERFORMER.toString()
+            )
             startActivity(intent)
 
         }

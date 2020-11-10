@@ -19,10 +19,11 @@
     <string name="venue">venue</string>
     <string name="performer">performer</string>
     <string name="id_chip">Id</string>
-    <string name="country">COUNTRY</string>
     <string name="state">State</string>
     <string name="city">CITY</string>
     <string name="search">Search</string>
     <string name="city_state_country_id">City, State,Country, Id</string>
+    <string name="country">COUNTRY</string>
+    <string name="keyword">KEYWORD</string>
 
 </resources>

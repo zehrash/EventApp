@@ -15,7 +15,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:node="merge">
-        <activity android:name=".view.PerformerActivity"></activity>
+        <activity android:name=".view.result.VenueResultActivity"></activity>
+        <activity android:name=".view.PerformerActivity" />
         <activity android:name=".view.EventActivity" />
         <activity android:name=".view.VenueActivity" />
         <activity android:name=".view.OptionsActivity" />

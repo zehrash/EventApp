@@ -83,7 +83,8 @@ class EventRequest(
         return allEvents
     }
 
-    override fun getByID(id: String) {
+
+    override fun getByID(id: String, callback: (String)-> Unit) {
         //byID
         //https://api.seatgeek.com/2/events/801255
         val url: String = "$apiUrl/$id?client_id=$apiKey"
@@ -116,7 +117,7 @@ class EventRequest(
     //TODO("Not yet implemented")
 //}
 
-    override fun getByKeyword(keyword: String) {
+    override fun getByKeyword(keyword: String,callback: (String) -> Unit) {
 
         val url: String = "$apiUrl?q=$keyword&client_id=$apiKey"
         val request: Request = Request.Builder().url(url).build()

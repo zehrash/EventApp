@@ -15,6 +15,7 @@ abstract class DataClass {
     var eventMap: MutableMap<String, EventData> = mutableMapOf()
     var venueMap = mutableMapOf<String, VenueData>()
     var performerMap = mutableMapOf<String, PerformerData>()
+    var venueList:MutableList<VenueData> = mutableListOf()
 
     fun addToVenueMap(venue: VenueData, eventTitle: String) {
 
@@ -24,21 +25,6 @@ abstract class DataClass {
     fun addToPerformerMap(venue: VenueData, eventTitle: String) {
 
     }
-    /*
-    getResultByType parameters after overloading have to be
-     enum type(VenueType/PerformerType)
-     keyword matching type
-
-     ex. type: VenueType, keyword:String
-
-    .getResultByType(STATE, NY)
-    .getResultByType(GENRES, rock)
-
-    getResultByType has to return list of EventData/VenueData/PerformerData depending on the class
-          where is the implementation of the method
-     */
-
-//    abstract fun getResultByType(type: EnumTypeInt, keyword: String): MutableList<DataInterface>
 
     fun addToEventMap(event: JsonObject) {
         if (event.keySet().contains("title")) {
@@ -77,18 +63,13 @@ abstract class DataClass {
         lateinit var name: String
         lateinit var id: String
 
-
-
-        if (event.keySet().contains("venue")) {
-            val venueInfo = event.get("venue").asJsonObject
-            for ((key, value) in venueInfo.entrySet()) {
-                when (key) {
-                    "city" -> city = value.toString()
-                    "state" -> state = value.toString()
-                    "country" -> country = value.toString()
-                    "name" -> name = value.toString()
-                    "id" -> id = value.toString()
-                }
+        for ((key, value) in event.entrySet()) {
+            when (key) {
+                "city" -> city = value.toString()
+                "state" -> state = value.toString()
+                "country" -> country = value.toString()
+                "name" -> name = value.toString()
+                "id" -> id = value.toString()
             }
         }
         return VenueData(city, state, country, name, id)
@@ -110,8 +91,9 @@ abstract class DataClass {
         //TODO visualize event
     }
 
-    abstract fun getByKeyword(keyword: String)
-    abstract fun getByID(id: String)
+    abstract fun getByKeyword(keyword: String, callback: (String) -> Unit)
+    abstract fun getByID(id: String, callback: (String) -> Unit)
     abstract fun showInfo(title: String)
+
 
 }

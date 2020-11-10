@@ -23,11 +23,11 @@ class PerformerRequest(
         TODO("Not yet implemented")
     }
 
-    override fun getByKeyword(keyword: String) {
+    override fun getByKeyword(keyword: String,callback: (String)->Unit) {
         TODO("Not yet implemented")
     }
 
-    override fun getByID(id: String) {
+    override fun getByID(id: String,callback: (String)->Unit) {
         //byID
         val url: String = "$apiUrl$id?client_id=$apiKey"
         val request: Request = Request.Builder().url(url).build()
@@ -46,8 +46,7 @@ class PerformerRequest(
 
 
 // is calling reqFactory correct here?? or just create object and cast it to EventReq
-                val ob : DataClass? = RequestFactory().getClass(ReqType.EVENT)
-                ob!!.getByID(newPerformer.id)
+
             }
         })
     }

@@ -11,6 +11,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.NonCancellable.join
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.launch
 import okhttp3.*
 import java.io.IOException
@@ -23,24 +24,22 @@ class VenueRequest(
     private val client: OkHttpClient
 ) :
     DataClass() {
-    //    enum class()
-    val venueList: MutableList<VenueData> = mutableListOf()
-    fun getVenueList(type: VenueType, keyword: String): MutableList<VenueData>? {
 
-    }
+    //val venueList: MutableList<VenueData> = mutableListOf()
+
+
 
     fun findVenue() {
 
     }
 
-    //type should be enum
-    fun getVenueByType(type: VenueType, keyword: String): MutableList<VenueData>? {
+    fun getVenueByType(type: VenueType, keyword: String, callback: (String) -> Unit) {
         //https://api.seatgeek.com/2/venues?postal_code=90210
         val url: String =
             "$apiUrl?${type.toString().toLowerCase(Locale.ROOT)}=$keyword&client_id=$apiKey"
         val request: Request = Request.Builder().url(url).build()
         var venues: JsonObject
-        var venueList = mutableListOf<VenueData>()
+        //val venueList = mutableListOf<VenueData>()
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call?, e: IOException) {
@@ -53,42 +52,47 @@ class VenueRequest(
                     val body = response.body()?.string()
                     val gson = GsonBuilder().setPrettyPrinting().create()
                     venues = gson.fromJson(body, JsonObject::class.java).asJsonObject
-
+                    lateinit var ob: VenueData
                     for (obj in venues.get("venues").asJsonArray) {
                         val newObj = gson.fromJson(obj, JsonObject::class.java).asJsonObject
                         //      addToVenueMap(getVenueInfo(newObj)) need to add event title matching venue
-                        print(newObj.toString())
                         venueList.add(getVenueInfo(newObj))
                     }
-
+                    // callback(venueList)
+                    callback(venueList.toString())
                 }
-                venueList=
             }
         })
-        return venueList
+
         //must show info about the venue and onClick show events in this venue
     }
 
-    override fun getByKeyword(keyword: String) {
-        //https://api.seatgeek.com/2/venues?q=madison
+    override fun getByKeyword(keyword: String, callback: (String) -> Unit) {
         val url: String = "$apiUrl?q=$keyword&client_id=$apiKey"
         val request: Request = Request.Builder().url(url).build()
-        var venue: JsonObject
-        val call = client.newCall(request).enqueue(object : Callback {
+        var venues: JsonObject
+        client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 println("Failed to execute task")
             }
 
             override fun onResponse(call: Call, response: Response) {
-                val body = response.body()?.string()
-                val gson = GsonBuilder().setPrettyPrinting().create()
-                venue = gson.fromJson(body, JsonObject::class.java).asJsonObject
-
+                if (response.isSuccessful) {
+                    val body = response.body()?.string()
+                    val gson = GsonBuilder().setPrettyPrinting().create()
+                    venues = gson.fromJson(body, JsonObject::class.java).asJsonObject
+                    for (obj in venues.get("venues").asJsonArray) {
+                        val newObj = gson.fromJson(obj, JsonObject::class.java).asJsonObject
+                        venueList.add(getVenueInfo(newObj))
+                        //add to venue map
+                    }
+                }
+                callback(venueList.toString())
             }
         })
     }
 
-    override fun getByID(id: String) {
+    override fun getByID(id: String, callback: (String) -> Unit) {
         val url: String = "$apiUrl?id=$id&client_id=$apiKey"
         val request: Request = Request.Builder().url(url).build()
         var venue: JsonObject
@@ -98,16 +102,14 @@ class VenueRequest(
             }
 
             override fun onResponse(call: Call, response: Response) {
-                val body = response.body()?.string()
-                val gson = GsonBuilder().setPrettyPrinting().create()
-                venue = gson.fromJson(body, JsonObject::class.java).asJsonObject
-
-                val newVenue = getVenueInfo(venue)
-                //   addToVenueMap(newVenue) need to add event title matching venue
-                showInfo(newVenue.name)
-// is calling reqFactory correct here?? or just create object and cast it to EventReq
-                val ob: EventRequest = RequestFactory().getClass(ReqType.EVENT) as EventRequest
-                ob.getEventByVenue(VenueType.ID, newVenue.id)
+                if (response.isSuccessful) {
+                    val body = response.body()?.string()
+                    val gson = GsonBuilder().setPrettyPrinting().create()
+                    venue = gson.fromJson(body, JsonObject::class.java).asJsonObject
+                    callback(getVenueInfo(venue).toString())
+                    //   addToVenueMap(newVenue) need to add event title matching venue
+                }
+                //show events in this venue
             }
         })
     }

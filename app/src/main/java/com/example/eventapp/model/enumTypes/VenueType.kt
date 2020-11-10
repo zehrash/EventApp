@@ -4,5 +4,6 @@ enum class VenueType: EnumTypeInt {
     STATE,
     COUNTRY,
     CITY,
-    ID
+    ID,
+    KEYWORD
 }
