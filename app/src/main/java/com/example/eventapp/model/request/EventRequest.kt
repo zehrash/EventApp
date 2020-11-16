@@ -1,8 +1,10 @@
 package com.example.eventapp.model.request
 
+import android.app.usage.UsageEvents
 import com.example.eventapp.model.data.DataInterface
 import com.example.eventapp.model.data.EventData
 import com.example.eventapp.model.enumTypes.EnumTypeInt
+import com.example.eventapp.model.enumTypes.PerformerType
 import com.example.eventapp.model.enumTypes.VenueType
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
@@ -15,7 +17,7 @@ class EventRequest(
     private val client: OkHttpClient
 ) : DataClass() {
 
-
+/*
     /* get event by venue
        type - venue type: state, city, country
        keyword - name of state, city, country
@@ -51,7 +53,7 @@ class EventRequest(
         return allEvents
     }
 
-     fun getResultByType(type: VenueType, keyword: String): MutableList<EventData> {
+     fun getResultByType(type: PerformerType, keyword: String): MutableList<EventData> {
 
 
         val url: String =
@@ -82,8 +84,7 @@ class EventRequest(
 
         return allEvents
     }
-
-
+ */
     override fun getByID(id: String, callback: (String)-> Unit) {
         //byID
         //https://api.seatgeek.com/2/events/801255
@@ -102,21 +103,10 @@ class EventRequest(
                 event = gson.fromJson(body, JsonObject::class.java).asJsonObject
 
                 val newEvent = getEventInfo(event)
-
-                addToEventMap(event)
-                showEventInfo(newEvent.name)
+                callback(newEvent.toString())
             }
         })
     }
-
-    override fun showInfo(title: String) {
-        TODO("Not yet implemented")
-    }
-
-    //override fun getResultByType(type: EnumTypeInt, keyword: String): MutableList<DataClass> {
-    //TODO("Not yet implemented")
-//}
-
     override fun getByKeyword(keyword: String,callback: (String) -> Unit) {
 
         val url: String = "$apiUrl?q=$keyword&client_id=$apiKey"
@@ -131,9 +121,12 @@ class EventRequest(
                 val body = response.body()?.string()
                 val gson = GsonBuilder().setPrettyPrinting().create()
                 events = gson.fromJson(body, JsonObject::class.java).asJsonObject
-
-                //check returned json to build logic
-
+                for (obj in events.get("events").asJsonArray) {
+                    val newObj = gson.fromJson(obj, JsonObject::class.java).asJsonObject
+                    eventList.add(getEventInfo(newObj))
+                    //add to venue map
+                }
+                callback(eventList.toString())
             }
         })
     }

@@ -1,6 +1,9 @@
 package com.example.eventapp.model.request
 
+import android.content.Context
 import android.text.TextUtils.join
+import com.example.eventapp.database.AppDatabase
+import com.example.eventapp.database.VenueDAO
 import com.example.eventapp.model.enumTypes.ReqType
 import com.example.eventapp.model.data.VenueData
 import com.example.eventapp.model.enumTypes.VenueType
@@ -25,14 +28,9 @@ class VenueRequest(
 ) :
     DataClass() {
 
-    //val venueList: MutableList<VenueData> = mutableListOf()
+    private var databaseInstance= AppDatabase.getInstance(Context)
 
-
-
-    fun findVenue() {
-
-    }
-
+val venueDAO = VenueDAO
     fun getVenueByType(type: VenueType, keyword: String, callback: (String) -> Unit) {
         //https://api.seatgeek.com/2/venues?postal_code=90210
         val url: String =
@@ -58,7 +56,6 @@ class VenueRequest(
                         //      addToVenueMap(getVenueInfo(newObj)) need to add event title matching venue
                         venueList.add(getVenueInfo(newObj))
                     }
-                    // callback(venueList)
                     callback(venueList.toString())
                 }
             }
@@ -84,10 +81,12 @@ class VenueRequest(
                     for (obj in venues.get("venues").asJsonArray) {
                         val newObj = gson.fromJson(obj, JsonObject::class.java).asJsonObject
                         venueList.add(getVenueInfo(newObj))
+
+
                         //add to venue map
                     }
+                    callback(venueList.toString())
                 }
-                callback(venueList.toString())
             }
         })
     }
@@ -112,12 +111,5 @@ class VenueRequest(
                 //show events in this venue
             }
         })
-    }
-
-    override fun showInfo(title: String) {
-        if (venueMap.containsKey(title)) {
-            val venue = venueMap.get(title)
-            //visualize info
-        }
     }
 }

@@ -1,40 +1,15 @@
 package com.example.eventapp.model.request
 
-import com.example.eventapp.model.data.DataInterface
 import com.example.eventapp.model.data.EventData
 import com.example.eventapp.model.data.PerformerData
 import com.example.eventapp.model.data.VenueData
-import com.example.eventapp.model.enumTypes.EnumTypeInt
-import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
-import okhttp3.*
-import java.io.IOException
 
 abstract class DataClass {
 
-    var eventMap: MutableMap<String, EventData> = mutableMapOf()
-    var venueMap = mutableMapOf<String, VenueData>()
-    var performerMap = mutableMapOf<String, PerformerData>()
+    var eventList:MutableList<EventData> = mutableListOf()
     var venueList:MutableList<VenueData> = mutableListOf()
-
-    fun addToVenueMap(venue: VenueData, eventTitle: String) {
-
-
-    }
-
-    fun addToPerformerMap(venue: VenueData, eventTitle: String) {
-
-    }
-
-    fun addToEventMap(event: JsonObject) {
-        if (event.keySet().contains("title")) {
-            val newEvent = getEventInfo(event)
-            if (!eventMap.containsKey(newEvent.name)) {
-                eventMap.put(newEvent.name, newEvent)
-
-            }
-        }
-    }
+    var performerList:MutableList<PerformerData> = mutableListOf()
 
     fun getPerformerInfo(event: JsonObject): PerformerData {
         lateinit var name: String
@@ -83,17 +58,7 @@ abstract class DataClass {
         return EventData(title, performer, venue, event, id)
     }
 
-    fun showEventInfo(title: String) {
-        val tempEvent: EventData? = eventMap.get(title)
-        //visualize title
-        //visualize venue- name
-        //visualize performer -name
-        //TODO visualize event
-    }
-
     abstract fun getByKeyword(keyword: String, callback: (String) -> Unit)
     abstract fun getByID(id: String, callback: (String) -> Unit)
-    abstract fun showInfo(title: String)
-
 
 }

@@ -1,4 +1,4 @@
-package com.example.eventapp.view.result
+package com.example.eventapp.view.venue
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,15 +9,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.eventapp.R
 import com.example.eventapp.model.data.VenueData
 
-class RecyclerViewAdapter(private val context: Context, private val venues: ArrayList<VenueData>?) :
-    RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewAdapter.ViewHolder {
+class VenueRecyclerViewAdapter(private val context: Context, private val venues: ArrayList<VenueData>?) :
+    RecyclerView.Adapter<VenueRecyclerViewAdapter.ViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.custom_view, parent, false)
+            .inflate(R.layout.custom_view_venue, parent, false)
         return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: RecyclerViewAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = venues?.get(position)
         holder.name.text = item?.name
         holder.country.text = item?.country

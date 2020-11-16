@@ -1,4 +1,4 @@
-package com.example.eventapp.view
+package com.example.eventapp.view.event
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

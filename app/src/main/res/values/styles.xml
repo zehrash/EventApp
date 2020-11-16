@@ -12,16 +12,23 @@
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
         <item name="colorAccent">@color/secondaryLightColor</item>
         <item name="android:windowBackground">@color/colorBackground</item>
+        <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
     </style>
 
     <style name="ShapeAppearance.AppTheme.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
-        <item name="cornerFamily">cut</item>
+        <item name="cornerFamily">rounded</item>
         <item name="cornerSize">8dp</item>
 
     </style>
+    <style name="Widget.App.CardView" parent="Widget.MaterialComponents.CardView">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Card</item>
+        <item name="shapeAppearance"> @style/ShapeAppearance.AppTheme.SmallComponent</item>
+    </style>
 
-    <style name="ShapeAppearanceOverlay.MaterialComponents.Chip" parent="" tools:ignore="PrivateResource">
-        <item name="cornerSize">50%</item>
+    <style name="ThemeOverlay.App.Card" parent="">
+        <item name="colorPrimary">@color/primaryLightColor</item>
+        <item name="colorSurface">@color/secondaryLightColor</item>
+        <item name="colorOnSurface">@color/secondaryColor</item>
     </style>
 
 

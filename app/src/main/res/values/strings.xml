@@ -2,7 +2,7 @@
     <string name="app_name">EventApp</string>
     <string name="email">Email</string>
     <string name="fullName">Full name</string>
-    <string name="id" />
+    <string name="id">ID</string>
     <string name="name">Name</string>
     <string name="password">Password</string>
     <string name="rgister">Rgister</string>
@@ -18,12 +18,15 @@
     <string name="events">Events</string>
     <string name="venue">venue</string>
     <string name="performer">performer</string>
-    <string name="id_chip">Id</string>
-    <string name="state">State</string>
+    <string name="id_chip">ID</string>
+    <string name="state">STATE</string>
     <string name="city">CITY</string>
     <string name="search">Search</string>
     <string name="city_state_country_id">City, State,Country, Id</string>
     <string name="country">COUNTRY</string>
     <string name="keyword">KEYWORD</string>
+    <string name="genres">GENRES</string>
+    <string name="slug">SLUG</string>
+    <string name="learn_more">Learn more</string>
 
 </resources>

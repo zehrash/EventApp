@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.VenueActivity">
+    tools:context=".view.venue.VenueActivity">
 
 
     <EditText
@@ -34,10 +34,10 @@
         android:text="@string/search"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.437"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.746" />
+        app:layout_constraintVertical_bias="0.767" />
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/chip_group"
@@ -55,7 +55,7 @@
         <com.google.android.material.chip.Chip
             android:id="@+id/city_chip"
             style="@style/Widget.MaterialComponents.Chip.Filter"
-            android:layout_width="77dp"
+            android:layout_width="wrap_content"
             android:layout_height="55dp"
             android:background="@color/secondaryLightColor"
             android:checkable="true"
@@ -105,29 +105,28 @@
         <com.google.android.material.chip.Chip
             android:id="@+id/id_chip"
             style="@style/Widget.MaterialComponents.Chip.Filter"
-            android:layout_width="77dp"
+            android:layout_width="wrap_content"
             android:layout_height="55dp"
             android:checkable="true"
             android:clickable="false"
             android:fontFamily="sans-serif"
             android:text="@string/id_chip"
+            app:chipMinHeight="20dp"
             android:textAlignment="center"
             android:textColor="@color/primaryLightColor"
-
-
             app:checkedIconVisible="true"
             app:chipBackgroundColor="@color/secondaryLightColor"
             app:chipCornerRadius="5dp" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/keyword_chip"
-            android:layout_width="77dp"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
             android:layout_height="55dp"
             android:checkable="true"
-            android:clickable="false"
             android:text="@string/keyword"
             android:textAlignment="center"
-            app:checkedIconVisible="false" />
+            app:checkedIconVisible="true" />
     </com.google.android.material.chip.ChipGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
