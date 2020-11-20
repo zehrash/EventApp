@@ -23,13 +23,13 @@ class PerformerRequest(
 
             override fun onResponse(call: Call, response: Response) {
                 if (response.isSuccessful) {
-                    val body = response.body()?.string()
+                    val body = response.body?.string()
                     val gson = GsonBuilder().setPrettyPrinting().create()
                     performers = gson.fromJson(body, JsonObject::class.java).asJsonObject
                     for (obj in performers.get("performers").asJsonArray) {
                         val newObj = gson.fromJson(obj, JsonObject::class.java).asJsonObject
                         performerList.add(getPerformerInfo(newObj))
-                        //add to venue map
+                      dataRepo.addPerformer(getPerformerInfo(newObj))
                     }
                     callback(performerList.toString())
                 }
@@ -49,13 +49,13 @@ class PerformerRequest(
 
             override fun onResponse(call: Call, response: Response) {
                 if (response.isSuccessful) {
-                    val body = response.body()?.string()
+                    val body = response.body?.string()
                     val gson = GsonBuilder().setPrettyPrinting().create()
                     performers = gson.fromJson(body, JsonObject::class.java).asJsonObject
                     for (obj in performers.get("performers").asJsonArray) {
                         val newObj = gson.fromJson(obj, JsonObject::class.java).asJsonObject
                         performerList.add(getPerformerInfo(newObj))
-                        //add to venue map
+                        dataRepo.addPerformer(getPerformerInfo(newObj))
                     }
                     callback(performerList.toString())
                 }
@@ -74,13 +74,13 @@ class PerformerRequest(
 
             override fun onResponse(call: Call, response: Response) {
                 if (response.isSuccessful) {
-                    val body = response.body()?.string()
+                    val body = response.body?.string()
                     val gson = GsonBuilder().setPrettyPrinting().create()
                     performers = gson.fromJson(body, JsonObject::class.java).asJsonObject
                     for (obj in performers.get("performers").asJsonArray) {
                         val newObj = gson.fromJson(obj, JsonObject::class.java).asJsonObject
                         performerList.add(getPerformerInfo(newObj))
-                        //add to venue map
+                        dataRepo.addPerformer(getPerformerInfo(newObj))
                     }
                     callback(performerList.toString())
                 }
@@ -93,15 +93,16 @@ class PerformerRequest(
         val url: String = "$apiUrl$id?client_id=$apiKey"
         val request: Request = Request.Builder().url(url).build()
         var performer: JsonObject
-        val call = client.newCall(request).enqueue(object : Callback {
+        client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 println("Failed to execute task")
             }
 
             override fun onResponse(call: Call, response: Response) {
-                val body = response.body()?.string()
+                val body = response.body?.string()
                 val gson = GsonBuilder().setPrettyPrinting().create()
                 performer = gson.fromJson(body, JsonObject::class.java).asJsonObject
+                dataRepo.addPerformer(getPerformerInfo(performer))
                 callback(getPerformerInfo(performer).toString())
             }
         })

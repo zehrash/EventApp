@@ -2,7 +2,6 @@ package com.example.eventapp.presenter
 
 import android.content.Context
 import android.content.Intent
-import com.example.eventapp.model.data.VenueData
 import com.example.eventapp.model.enumTypes.EventType
 import com.example.eventapp.model.enumTypes.PerformerType
 import com.example.eventapp.model.enumTypes.ReqType
@@ -16,6 +15,8 @@ interface ContractViews {
         fun getVenueByType(type: VenueType, keyword: String, displayRes: (String) -> Unit)
         fun getById(id: String, displayRes: (String) -> Unit)
         fun getByKeyword(keyword: String, displayRes: (String) -> Unit)
+
+        fun onDestroy()
     }
 
     interface EventView {
@@ -23,6 +24,8 @@ interface ContractViews {
         fun displayResult(result: String)
         fun getByID(id: String, displayRes: (String) -> Unit)
         fun getByKeyword(keyword: String, displayRes: (String) -> Unit)
+        fun getEventByVenueID(keyword: String, displayRes: (String) -> Unit)
+        fun getEventByPerformerID(keyword: String, displayRes: (String) -> Unit)
     }
 
     interface PerformerView {

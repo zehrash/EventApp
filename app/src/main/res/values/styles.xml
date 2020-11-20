@@ -20,6 +20,11 @@
         <item name="cornerSize">8dp</item>
 
     </style>
+    <style name="Widget.AppCompat.Button.Borderless.Colored." parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="cornerFamily">rounded</item>
+        <item name="strokeColor">#D75A4A</item>
+
+    </style>
     <style name="Widget.App.CardView" parent="Widget.MaterialComponents.CardView">
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.Card</item>
         <item name="shapeAppearance"> @style/ShapeAppearance.AppTheme.SmallComponent</item>

@@ -9,8 +9,8 @@
 
     <androidx.cardview.widget.CardView
         style="@style/Widget.App.CardView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="369dp"
+        android:layout_height="158dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,60 +21,65 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
 
-            android:layout_width="392dp"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="157dp"
             android:padding="5dp">
 
             <TextView
                 android:id="@+id/text_name"
-                android:layout_width="413dp"
-                android:layout_height="46dp"
-                android:layout_marginBottom="8dp"
+                android:layout_width="355dp"
+                android:layout_height="63dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="17dp"
                 android:fontFamily="@font/ribeye"
                 android:text="@string/name"
                 android:textAlignment="center"
                 android:textAllCaps="false"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/text_country"
+                app:layout_constraintBottom_toTopOf="@+id/id_performer"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.51"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <TextView
-                android:id="@+id/text_country"
-                android:layout_width="183dp"
-                android:layout_height="24dp"
-                android:layout_marginBottom="32dp"
-                android:fontFamily="sans-serif-medium"
-                android:text="@string/country"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toTopOf="@+id/text_city"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.118"
-                app:layout_constraintStart_toStartOf="@id/text_name"
-                app:layout_constraintTop_toBottomOf="parent" />
-
-            <TextView
-                android:id="@+id/text_city"
-                android:layout_width="192dp"
-                android:layout_height="32dp"
-                android:layout_marginTop="4dp"
-                android:fontFamily="sans-serif-medium"
-                android:text="@string/city"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.03"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_country" />
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/id_performer"
+                android:layout_width="170dp"
+                android:layout_height="34dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/id"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@id/text_name"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.564" />
+
+            <TextView
+                android:id="@+id/text_type"
+                android:layout_width="171dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/type"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/id_performer"
+                app:layout_constraintVertical_bias="0.0" />
 
             <ToggleButton
                 android:id="@+id/button_favorite"
                 android:layout_width="28dp"
                 android:layout_height="30dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="4dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="51dp"
+                android:layout_marginEnd="8dp"
                 android:background="@drawable/button_favorite"
                 android:checked="false"
                 android:text=""
@@ -87,26 +92,27 @@
 
             <Button
                 android:id="@+id/learn_more"
-                android:layout_width="135dp"
-                android:layout_height="44dp"
+                android:layout_width="131dp"
+                android:layout_height="38dp"
 
-                android:layout_marginStart="9dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="23dp"
 
-                android:backgroundTint="#D75A4A"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="4dp"
+                android:backgroundTint="#DA6B57"
                 android:fontFamily="sans-serif"
-                android:text="Learn more"
+                android:text="@string/learn_more"
                 android:textColor="@color/primaryTextColor"
                 android:textColorHint="@color/primaryTextColor"
                 android:textSize="12sp"
-                android:visibility="visible"
                 app:iconTint="#FFFFFF"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/button_favorite"
-                app:layout_constraintStart_toEndOf="@+id/text_city"
-                app:layout_constraintTop_toBottomOf="@+id/text_name"
-                tools:visibility="visible" />
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/text_type"
+                app:layout_constraintTop_toBottomOf="@+id/id_performer"
+                app:layout_constraintVertical_bias="1.0" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

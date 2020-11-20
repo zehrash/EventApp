@@ -1,15 +1,18 @@
 package com.example.eventapp.model.request
 
 import android.app.usage.UsageEvents
-import com.example.eventapp.model.data.DataInterface
-import com.example.eventapp.model.data.EventData
+import com.example.eventapp.database.model.Event
+
 import com.example.eventapp.model.enumTypes.EnumTypeInt
 import com.example.eventapp.model.enumTypes.PerformerType
 import com.example.eventapp.model.enumTypes.VenueType
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
+import kotlinx.coroutines.newFixedThreadPoolContext
 import okhttp3.*
 import java.io.IOException
+import java.lang.NullPointerException
+import java.util.*
 
 class EventRequest(
     private val apiKey: String,
@@ -17,114 +20,105 @@ class EventRequest(
     private val client: OkHttpClient
 ) : DataClass() {
 
-/*
-    /* get event by venue
-       type - venue type: state, city, country
-       keyword - name of state, city, country
-       returns all found events in list
-     */
-     fun getEventByVenue(type: VenueType, keyword: String): MutableList<EventData> {
+    fun getEventByVenueID(keyword: String, callback: (String) -> Unit) {
         //val url ="https://api.seatgeek.com/2/events/801255?client_id=MjEyNjg2NzZ8MTYwMDA2NTUyOC41OTc4NTI"
         val url: String =
-            apiUrl + "/events?venue." + "${type.name.toLowerCase()}=${keyword}&client_id=" + apiKey
+            apiUrl + "/events?venue.id=${keyword}&client_id=" + apiKey
 
         val request: Request = Request.Builder().url(url).build()
         var event: JsonObject
-        val allEvents = mutableListOf<EventData>()
-        val call = client.newCall(request).enqueue(object : Callback {
+        client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 println("Failed to execute task")
             }
 
             override fun onResponse(call: Call, response: Response) {
-                val body = response.body()?.string()
+                val body = response.body?.string()
                 val gson = GsonBuilder().setPrettyPrinting().create()
                 event = gson.fromJson(body, JsonObject::class.java).asJsonObject
+                val newEvent = getEventInfo(event)
 
-                for (obj in event.get("events").asJsonArray) {
-                    val newObj = gson.fromJson(obj, JsonObject::class.java).asJsonObject
-
-                    addToEventMap(newObj)
-                    allEvents.add(getEventInfo(newObj))
-
-                }
+                eventList.add(newEvent!!)
+                /*
+                Try-catch needs to used.
+                Json from request can be empty and method throws nullpointer exception
+                which has to be caught and no-result-fragment must be called
+                Check how to to add to  custom checked exception or check if event is null
+                 */
+                dataRepo.addEvent(newEvent)
+                callback(eventList.toString())
             }
         })
-        return allEvents
     }
 
-     fun getResultByType(type: PerformerType, keyword: String): MutableList<EventData> {
 
-
+    fun getEventByPerformerID(keyword: String, callback: (String) -> Unit) {
         val url: String =
-            apiUrl + "/events?performers." + "${type.name.toLowerCase()}=${keyword}&client_id=" + apiKey
+            apiUrl + "/events?performers.id=${keyword}&client_id=" + apiKey
 
         val request: Request = Request.Builder().url(url).build()
         var event: JsonObject
-        val allEvents = mutableListOf<EventData>()
-        val call = client.newCall(request).enqueue(object : Callback {
+        client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 println("Failed to execute task")
             }
 
             override fun onResponse(call: Call, response: Response) {
-                val body = response.body()?.string()
+                val body = response.body?.string()
                 val gson = GsonBuilder().setPrettyPrinting().create()
                 event = gson.fromJson(body, JsonObject::class.java).asJsonObject
 
-                for (obj in event.get("events").asJsonArray) {
-                    val newObj = gson.fromJson(obj, JsonObject::class.java).asJsonObject
+                eventList.add(getEventInfo(event)!!)
+                dataRepo.addEvent(getEventInfo(event)!!)
 
-                    addToEventMap(newObj)
-                    allEvents.add(getEventInfo(newObj))
-                }
+                callback(eventList.toString())
             }
         })
-
-
-        return allEvents
     }
- */
-    override fun getByID(id: String, callback: (String)-> Unit) {
+
+    override fun getByID(id: String, callback: (String) -> Unit) {
         //byID
         //https://api.seatgeek.com/2/events/801255
         val url: String = "$apiUrl/$id?client_id=$apiKey"
 
         val request: Request = Request.Builder().url(url).build()
         var event: JsonObject
-        val call = client.newCall(request).enqueue(object : Callback {
+        client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 println("Failed to execute task")
             }
 
             override fun onResponse(call: Call, response: Response) {
-                val body = response.body()?.string()
+                val body = response.body?.string()
                 val gson = GsonBuilder().setPrettyPrinting().create()
                 event = gson.fromJson(body, JsonObject::class.java).asJsonObject
 
                 val newEvent = getEventInfo(event)
+                eventList.add(newEvent!!)
+                dataRepo.addEvent(newEvent)
                 callback(newEvent.toString())
             }
         })
     }
-    override fun getByKeyword(keyword: String,callback: (String) -> Unit) {
+
+    override fun getByKeyword(keyword: String, callback: (String) -> Unit) {
 
         val url: String = "$apiUrl?q=$keyword&client_id=$apiKey"
         val request: Request = Request.Builder().url(url).build()
         var events: JsonObject
-        val call = client.newCall(request).enqueue(object : Callback {
+        client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 println("Failed to execute task")
             }
 
             override fun onResponse(call: Call, response: Response) {
-                val body = response.body()?.string()
+                val body = response.body?.string()
                 val gson = GsonBuilder().setPrettyPrinting().create()
                 events = gson.fromJson(body, JsonObject::class.java).asJsonObject
                 for (obj in events.get("events").asJsonArray) {
                     val newObj = gson.fromJson(obj, JsonObject::class.java).asJsonObject
-                    eventList.add(getEventInfo(newObj))
-                    //add to venue map
+                    eventList.add(getEventInfo(newObj)!!)
+                    dataRepo.addEvent(getEventInfo(newObj)!!)
                 }
                 callback(eventList.toString())
             }

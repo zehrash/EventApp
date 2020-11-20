@@ -1,5 +1,8 @@
 package com.example.eventapp.presenter
 
+import android.content.Context
+import com.example.eventapp.database.AppDatabase
+import com.example.eventapp.database.EventRepository
 import com.example.eventapp.model.enumTypes.ReqType
 import com.example.eventapp.model.request.DataClass
 import com.example.eventapp.model.request.EventRequest

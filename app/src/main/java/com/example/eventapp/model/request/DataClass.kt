@@ -1,42 +1,47 @@
 package com.example.eventapp.model.request
 
-import com.example.eventapp.model.data.EventData
-import com.example.eventapp.model.data.PerformerData
-import com.example.eventapp.model.data.VenueData
+import com.example.eventapp.database.AppDatabase
+import com.example.eventapp.database.EventRepository
+import com.example.eventapp.database.model.Event
+import com.example.eventapp.database.model.Performer
+import com.example.eventapp.database.model.Venue
 import com.google.gson.JsonObject
+import java.lang.NullPointerException
+
 
 abstract class DataClass {
 
-    var eventList:MutableList<EventData> = mutableListOf()
-    var venueList:MutableList<VenueData> = mutableListOf()
-    var performerList:MutableList<PerformerData> = mutableListOf()
+    lateinit var database: AppDatabase
+    lateinit var dataRepo: EventRepository
 
-    fun getPerformerInfo(event: JsonObject): PerformerData {
+    var eventList: MutableList<Event> = mutableListOf()
+    var venueList: MutableList<Venue> = mutableListOf()
+    var performerList: MutableList<Performer> = mutableListOf()
+
+    fun getPerformerInfo(event: JsonObject): Performer {
         lateinit var name: String
         lateinit var id: String
         lateinit var type: String
         lateinit var slug: String
 
-        if (event.keySet().contains("performers")) {
-            val performerInfo = event.get("performers").asJsonObject
-            for ((key, value) in performerInfo.entrySet()) {
-                when (key) {
-                    "name" -> name = value.toString()
-                    "id" -> id = value.toString()
-                    "type" -> type = value.toString()
-                    "slug" -> slug = value.toString()
-                }
+        for ((key, value) in event.entrySet()) {
+            when (key) {
+                "name" -> name = value.toString()
+                "id" -> id = value.toString()
+                "type" -> type = value.toString()
+                "slug" -> slug = value.toString()
             }
         }
-        return PerformerData(name, type, id, slug)
+        return Performer(id, name, type, slug)
     }
 
-    fun getVenueInfo(event: JsonObject): VenueData {
+    fun getVenueInfo(event: JsonObject): Venue {
         lateinit var city: String
         lateinit var state: String
         lateinit var country: String
         lateinit var name: String
         lateinit var id: String
+
 
         for ((key, value) in event.entrySet()) {
             when (key) {
@@ -47,18 +52,35 @@ abstract class DataClass {
                 "id" -> id = value.toString()
             }
         }
-        return VenueData(city, state, country, name, id)
+        return Venue(city, state, country, name, id)
     }
 
-    fun getEventInfo(event: JsonObject): EventData {
-        val title: String = event.get("title").toString()
-        val id: String = event.get("id").toString()
-        val venue: VenueData = getVenueInfo(event)
-        val performer: PerformerData = getPerformerInfo(event)
-        return EventData(title, performer, venue, event, id)
+    fun getEventInfo(event: JsonObject): Event? {
+
+        lateinit var performer: String
+       try {
+
+           val title: String = event.get("title").toString()
+           val id: String = event.get("id").toString()
+
+           val venueObj = event.get("venue").asJsonObject
+           val venue: Venue = getVenueInfo(venueObj)
+
+           val performers = event.get("performers").asJsonArray
+           for (obj in performers) {
+               val newObj = obj.asJsonObject.entrySet()
+               for ((key, value) in newObj) {
+                   when (key) {
+                       "id" -> performer = value.toString()
+                   }
+               }
+           }
+           return Event(id, title, performer, venue.id)
+       }catch (e:NullPointerException){
+           return null
+       }
     }
 
     abstract fun getByKeyword(keyword: String, callback: (String) -> Unit)
     abstract fun getByID(id: String, callback: (String) -> Unit)
-
 }

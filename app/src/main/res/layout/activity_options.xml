@@ -1,0 +1,563 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primaryColor"
+    tools:context="view.OptionsActivity">
+
+    <!--Base CardView-->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/base_cardview"
+        style="@style/Base.CardView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:layout_marginTop="32dp"
+        app:cardBackgroundColor="@color/primaryLightColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.021">
+
+        <!--This is a ConstraintLayout for the entire CardView
+                   including the expandable portion-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="392dp"
+            android:layout_height="720dp"
+            app:layout_constraintBottom_toBottomOf="@+id/base_cardview"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.511"
+            tools:layout_editor_absoluteX="-55dp">
+
+            <!--This is a ConstraintLayout for the fixed portion
+                of the CardView. The elements
+                that lie within the fixed portion of the CardView
+                can be constrained to this layout.-->
+
+            <!--The following is the expandable portion whose
+                visibility is initially set to 'gone'.
+                The parent LinearLayout contains 3 child LinearLayouts
+                that hold a subject name and an icon each.-->
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/fixed_layout"
+                android:layout_width="334dp"
+                android:layout_height="107dp"
+                android:background="#706B6B"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.083">
+
+                <TextView
+                    android:id="@+id/events_button"
+                    android:layout_width="216dp"
+                    android:layout_height="57dp"
+                    android:fontFamily="sans-serif-light"
+                    android:text="EVENTS"
+                    android:textAlignment="center"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="30sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/fixed_layout"
+                    app:layout_constraintEnd_toEndOf="@+id/fixed_layout"
+                    app:layout_constraintStart_toStartOf="@+id/fixed_layout"
+                    app:layout_constraintTop_toTopOf="@+id/fixed_layout" />
+
+                <ImageButton
+                    android:id="@+id/arrow_button"
+                    android:layout_width="43dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:background="#706B6B"
+                    android:src="@drawable/ic_baseline_expand_more_24"
+                    app:layout_constraintBottom_toBottomOf="@id/fixed_layout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.997"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/hidden_view1"
+                android:layout_width="380dp"
+                android:layout_height="143dp"
+                android:layout_marginTop="26dp"
+                android:layout_marginBottom="350dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fixed_layout"
+                tools:visibility="gone">
+
+                <!--Child LinearLayout 1-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/search_text1"
+                        android:layout_width="285dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:ems="10"
+                        android:foregroundTint="@color/primaryTextColor"
+                        android:hint="Search by"
+                        android:textColor="@color/primaryTextColor"
+                        android:textColorHint="#9A9696"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.497"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </LinearLayout>
+
+                <!--Child LinearLayout 2-->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="68dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/chip_group1"
+                        android:layout_width="match_parent"
+                        android:layout_height="61dp"
+                        app:chipMinHeight="20dp"
+                        app:chipSpacing="4dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.641"
+                        app:singleSelection="true">
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/id_chip1"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:checkable="true"
+                            android:fontFamily="sans-serif"
+                            android:text="@string/id_chip"
+                            android:textAlignment="center"
+                            android:textColor="@color/primaryLightColor"
+                            app:checkedIconVisible="true"
+                            app:chipBackgroundColor="@color/secondaryLightColor"
+                            app:chipCornerRadius="10dp"
+                            app:chipMinHeight="20dp" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/keyword_chip1"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:checkable="true"
+                            android:text="@string/keyword"
+                            android:textAlignment="center"
+                            android:textColor="@color/primaryLightColor"
+                            app:checkedIconVisible="true"
+                            app:chipBackgroundColor="@color/secondaryLightColor"
+                            app:chipCornerRadius="10dp"
+                            app:chipMinHeight="20dp" />
+
+                    </com.google.android.material.chip.ChipGroup>
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/search_button1"
+                    android:layout_width="168dp"
+                    android:layout_height="40dp"
+                    android:text="@string/search"
+                    android:textColor="#FFFFFF" />
+
+
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/fixed_layout2"
+                android:layout_width="334dp"
+                android:layout_height="107dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="47dp"
+
+                android:background="#706B6B"
+                app:layout_constraintBottom_toTopOf="@+id/constraintLayout3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fixed_layout"
+                tools:visibility="visible">
+
+                <TextView
+                    android:id="@+id/performers_button1"
+                    android:layout_width="179dp"
+                    android:layout_height="57dp"
+                    android:layout_marginTop="28dp"
+                    android:fontFamily="sans-serif-light"
+                    android:text="VENUES"
+                    android:textAlignment="center"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="36sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <ImageButton
+                    android:id="@+id/arrow_button2"
+                    android:layout_width="43dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:background="#706B6B"
+                    android:src="@drawable/ic_baseline_expand_more_24"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.996"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="1.0" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/hidden_view2"
+                android:layout_width="448dp"
+                android:layout_height="256dp"
+                android:layout_marginTop="150dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="351dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/search_text2"
+                        android:layout_width="285dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:ems="10"
+                        android:foregroundTint="@color/primaryTextColor"
+                        android:hint="Search by"
+                        android:textColor="@color/primaryTextColor"
+                        android:textColorHint="#9A9696"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.497"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/chip_group2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:chipMinHeight="20dp"
+                        app:chipSpacing="4dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.641"
+                        app:singleSelection="true"
+                        tools:visibility="visible">
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/city_chip2"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:checkable="true"
+                            android:fontFamily="sans-serif"
+                            android:padding="12dp"
+                            android:text="@string/city"
+                            android:textAlignment="center"
+                            android:textColor="@color/primaryLightColor"
+                            app:checkedIconVisible="true"
+                            app:chipBackgroundColor="@color/secondaryLightColor"
+                            app:chipCornerRadius="10dp"
+                            app:chipMinHeight="20dp" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/state_chip2"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:checkable="true"
+                            android:fontFamily="sans-serif"
+                            android:padding="12dp"
+                            android:text="@string/state"
+                            android:textAlignment="center"
+                            android:textColor="@color/primaryLightColor"
+                            app:checkedIconVisible="true"
+                            app:chipBackgroundColor="@color/secondaryLightColor"
+                            app:chipCornerRadius="10dp"
+                            app:chipMinHeight="20dp"
+                            tools:text="STATE" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/country_chip2"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:checkable="true"
+                            android:fontFamily="sans-serif"
+                            android:text="@string/country"
+                            android:textAlignment="center"
+                            android:textColor="@color/primaryLightColor"
+                            app:checkedIconVisible="true"
+                            app:chipBackgroundColor="@color/secondaryLightColor"
+                            app:chipCornerRadius="10dp"
+                            app:chipMinHeight="20dp" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_keyword_venue"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:checkable="true"
+                            android:fontFamily="sans-serif"
+                            android:text="@string/keyword"
+                            android:textAlignment="center"
+                            android:textColor="@color/primaryLightColor"
+                            app:checkedIconVisible="true"
+                            app:chipBackgroundColor="@color/secondaryLightColor"
+                            app:chipCornerRadius="10dp"
+                            app:chipMinHeight="20dp" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_id_venue"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:checkable="true"
+                            android:fontFamily="sans-serif"
+                            android:text="@string/id_chip"
+                            android:textAlignment="center"
+                            android:textColor="@color/primaryLightColor"
+                            app:checkedIconVisible="true"
+                            app:chipBackgroundColor="@color/secondaryLightColor"
+                            app:chipCornerRadius="10dp"
+                            app:chipMinHeight="20dp" />
+                    </com.google.android.material.chip.ChipGroup>
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/search_button2"
+                    android:layout_width="168dp"
+                    android:layout_height="40dp"
+                    android:text="@string/search"
+                    android:textColor="#FFFFFF" />
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout3"
+                android:layout_width="334dp"
+                android:layout_height="107dp"
+                android:layout_marginBottom="220dp"
+                android:background="#706B6B"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.431"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fixed_layout2"
+                tools:visibility="visible">
+
+                <TextView
+                    android:id="@+id/performers_button"
+                    android:layout_width="254dp"
+                    android:layout_height="71dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginBottom="14dp"
+                    android:fontFamily="sans-serif-light"
+                    android:text="PERFORMERS"
+                    android:textAlignment="center"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="36sp"
+                    app:layout_constraintBottom_toTopOf="@+id/arrow_button3"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <ImageButton
+                    android:id="@+id/arrow_button3"
+                    android:layout_width="43dp"
+                    android:layout_height="38dp"
+                    android:backgroundTint="#706B6B"
+                    android:src="@drawable/ic_baseline_expand_more_24"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.989"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/hidden_view3"
+                android:layout_width="342dp"
+                android:layout_height="174dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="72dp"
+                android:gravity="center|clip_vertical"
+                android:orientation="vertical"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.346"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <EditText
+                        android:id="@+id/search_text3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|center_horizontal"
+                        android:ems="10"
+                        android:foregroundTint="@color/primaryTextColor"
+                        android:hint="Search by"
+                        android:textColor="@color/primaryTextColor"
+                        android:textColorHint="#9A9696"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.497"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="108dp"
+                    android:orientation="vertical">
+
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/chip_group3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:chipMinHeight="20dp"
+                        app:chipSpacing="4dp"
+                        app:singleSelection="true">
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_id_performer"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:checkable="true"
+                            android:fontFamily="sans-serif"
+                            android:padding="12dp"
+                            android:text="@string/id_chip"
+                            android:textAlignment="center"
+                            android:textColor="@color/primaryLightColor"
+                            android:visibility="visible"
+                            app:checkedIconVisible="true"
+                            app:chipBackgroundColor="@color/secondaryLightColor"
+                            app:chipCornerRadius="10dp"
+                            app:chipMinHeight="20dp"
+                            tools:text="ID" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_genres_performer"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:checkable="true"
+                            android:fontFamily="sans-serif"
+                            android:padding="12dp"
+                            android:text="@string/genres"
+                            android:textAlignment="center"
+                            android:textColor="@color/primaryLightColor"
+                            app:checkedIconVisible="true"
+                            app:chipBackgroundColor="@color/secondaryLightColor"
+                            app:chipCornerRadius="10dp"
+                            app:chipMinHeight="20dp" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_slug_performer"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:checkable="true"
+                            android:fontFamily="sans-serif"
+                            android:text="@string/slug"
+                            android:textAlignment="center"
+                            android:textColor="@color/primaryLightColor"
+                            app:checkedIconVisible="true"
+                            app:chipBackgroundColor="@color/secondaryLightColor"
+                            app:chipCornerRadius="10dp"
+                            app:chipMinHeight="20dp"
+                            tools:text="SLUG" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/keyword_chip_performer"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="55dp"
+                            android:checkable="true"
+                            android:fontFamily="sans-serif"
+                            android:text="@string/keyword"
+                            android:textAlignment="center"
+                            android:textColor="@color/primaryLightColor"
+                            app:checkedIconVisible="true"
+                            app:chipBackgroundColor="@color/secondaryLightColor"
+                            app:chipCornerRadius="10dp"
+                            app:chipMinHeight="20dp" />
+                    </com.google.android.material.chip.ChipGroup>
+
+                    <Button
+                        android:id="@+id/search_button3"
+                        android:layout_width="168dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/search"
+                        android:textColor="#FFFFFF"
+                        android:visibility="visible"
+                        tools:visibility="visible" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

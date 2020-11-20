@@ -1,30 +1,30 @@
-package com.example.eventapp.view.venue
+package com.example.eventapp.view.event
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.eventapp.R
+import com.example.eventapp.database.model.Event
 import com.example.eventapp.database.model.Venue
+import com.example.eventapp.view.venue.VenueRecyclerViewAdapter
 import java.util.ArrayList
 
-class VenueResultActivity : AppCompatActivity() {
-
-    private var venueRecyclerViewAdapter: VenueRecyclerViewAdapter? = null
+class EventsResultActivity : AppCompatActivity() {
+    private var eventRecyclerViewAdapter: EventRecyclerViewAdapter? = null
     private lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_venue_result)
+        setContentView(R.layout.activity_events_result)
 
-        val venues: ArrayList<Venue>? = intent.getParcelableArrayListExtra("venue")
-        if (venueRecyclerViewAdapter == null) {
-            recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+        val events: ArrayList<Event>? = intent.getParcelableArrayListExtra("event")
+        if (eventRecyclerViewAdapter == null) {
+            recyclerView = findViewById<RecyclerView>(R.id.recyclerView_event)
             // layoutManager = new LinearLayoutManager(this);
             recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         }
-        val rvAdapter = VenueRecyclerViewAdapter(this, venues)
+        val rvAdapter = EventRecyclerViewAdapter(this, events)
         recyclerView.adapter = rvAdapter;
     }
-
 }
