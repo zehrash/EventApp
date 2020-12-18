@@ -20,7 +20,6 @@ class VenueResultActivity : AppCompatActivity() {
         val venues: ArrayList<Venue>? = intent.getParcelableArrayListExtra("venue")
         if (venueRecyclerViewAdapter == null) {
             recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-            // layoutManager = new LinearLayoutManager(this);
             recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         }
         val rvAdapter = VenueRecyclerViewAdapter(this, venues)

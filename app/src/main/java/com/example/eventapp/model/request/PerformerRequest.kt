@@ -28,8 +28,15 @@ class PerformerRequest(
                     performers = gson.fromJson(body, JsonObject::class.java).asJsonObject
                     for (obj in performers.get("performers").asJsonArray) {
                         val newObj = gson.fromJson(obj, JsonObject::class.java).asJsonObject
-                        performerList.add(getPerformerInfo(newObj))
-                      dataRepo.addPerformer(getPerformerInfo(newObj))
+
+                        val newPeformer = getPerformerInfo(newObj)
+                        if (newPeformer == null) {
+                            callback(newPeformer?.toString().orEmpty())
+                            return
+                        }
+
+                        performerList.add(newPeformer)
+                        dataRepo.addPerformer(newPeformer)
                     }
                     callback(performerList.toString())
                 }
@@ -54,8 +61,14 @@ class PerformerRequest(
                     performers = gson.fromJson(body, JsonObject::class.java).asJsonObject
                     for (obj in performers.get("performers").asJsonArray) {
                         val newObj = gson.fromJson(obj, JsonObject::class.java).asJsonObject
-                        performerList.add(getPerformerInfo(newObj))
-                        dataRepo.addPerformer(getPerformerInfo(newObj))
+                        val newPeformer = getPerformerInfo(newObj)
+                        if (newPeformer == null) {
+                                callback(newPeformer?.toString().orEmpty())
+                                return
+                        }
+
+                        performerList.add(newPeformer)
+                        dataRepo.addPerformer(newPeformer)
                     }
                     callback(performerList.toString())
                 }
@@ -79,8 +92,14 @@ class PerformerRequest(
                     performers = gson.fromJson(body, JsonObject::class.java).asJsonObject
                     for (obj in performers.get("performers").asJsonArray) {
                         val newObj = gson.fromJson(obj, JsonObject::class.java).asJsonObject
-                        performerList.add(getPerformerInfo(newObj))
-                        dataRepo.addPerformer(getPerformerInfo(newObj))
+                        val newPeformer = getPerformerInfo(newObj)
+                        if (newPeformer == null) {
+                            callback(newPeformer?.toString().orEmpty())
+                            return
+                        }
+
+                        performerList.add(newPeformer)
+                        dataRepo.addPerformer(newPeformer)
                     }
                     callback(performerList.toString())
                 }
@@ -102,7 +121,14 @@ class PerformerRequest(
                 val body = response.body?.string()
                 val gson = GsonBuilder().setPrettyPrinting().create()
                 performer = gson.fromJson(body, JsonObject::class.java).asJsonObject
-                dataRepo.addPerformer(getPerformerInfo(performer))
+                val newPeformer = getPerformerInfo(performer)
+                if (newPeformer == null) {
+                    callback(newPeformer?.toString().orEmpty())
+                    return
+                }
+                performerList.add(newPeformer)
+                dataRepo.addPerformer(newPeformer)
+
                 callback(getPerformerInfo(performer).toString())
             }
         })

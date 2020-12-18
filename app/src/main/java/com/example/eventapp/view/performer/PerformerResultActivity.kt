@@ -20,8 +20,7 @@ class PerformerResultActivity : AppCompatActivity() {
 
         val performers: ArrayList<Performer>? = intent.getParcelableArrayListExtra("performer")
         if (performerRecyclerViewAdapter == null) {
-            recyclerView = findViewById<RecyclerView>(R.id.recyclerView_performer)
-            // layoutManager = new LinearLayoutManager(this);
+            recyclerView = findViewById(R.id.recyclerView_performer)
             recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         }
         val rvAdapter = PerformerRecyclerViewAdapter(this, performers)

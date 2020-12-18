@@ -22,6 +22,7 @@
     </style>
     <style name="Widget.AppCompat.Button.Borderless.Colored." parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
         <item name="strokeColor">#D75A4A</item>
 
     </style>
@@ -36,7 +37,14 @@
         <item name="colorOnSurface">@color/secondaryColor</item>
     </style>
 
-
+    <style name="FabDiamondOverlay" parent="">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+    <style name="BottomNavigationTheme" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/primaryDarkColor</item>
+        <item name="android:textColorSecondary">@color/primaryColor</item>
+    </style>
 
 
 </resources>

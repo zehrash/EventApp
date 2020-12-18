@@ -44,7 +44,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/id"
+                android:id="@+id/id_event"
                 android:layout_width="205dp"
                 android:layout_height="33dp"
                 android:fontFamily="sans-serif-medium"
@@ -59,7 +59,7 @@
 
 
             <ToggleButton
-                android:id="@+id/button_favorite"
+                android:id="@+id/button_favorite_event"
                 android:layout_width="28dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="14dp"
@@ -72,11 +72,11 @@
                 android:textOn=""
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/learn_more"
+                app:layout_constraintStart_toEndOf="@+id/learn_more_event"
                 app:layout_constraintTop_toBottomOf="@+id/text_name" />
 
             <Button
-                android:id="@+id/learn_more"
+                android:id="@+id/learn_more_event"
                 android:layout_width="137dp"
                 android:layout_height="38dp"
 
@@ -92,7 +92,7 @@
                 android:textSize="12sp"
                 app:iconTint="#FFFFFF"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/button_favorite"
+                app:layout_constraintEnd_toStartOf="@+id/button_favorite_event"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/id" />
         </androidx.constraintlayout.widget.ConstraintLayout>

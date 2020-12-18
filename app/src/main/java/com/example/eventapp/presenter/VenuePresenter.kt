@@ -5,21 +5,23 @@ import android.content.Intent
 import com.example.eventapp.database.AppDatabase
 import com.example.eventapp.database.EventRepository
 import com.example.eventapp.database.model.Venue
+import com.example.eventapp.model.enumTypes.EventType
 import com.example.eventapp.model.enumTypes.ReqType
 import com.example.eventapp.model.enumTypes.VenueType
 import com.example.eventapp.model.request.DataClass
 import com.example.eventapp.model.request.VenueRequest
+import com.example.eventapp.view.NoEventsActivity
 import com.example.eventapp.view.venue.VenueResultActivity
 import okhttp3.Call
 import okhttp3.Response
 import java.io.IOException
 import java.util.ArrayList
 
-class PresenterVenue(var context: Context, type: ReqType) : ContractViews.VenueView,
+class VenuePresenter(var context: Context, type: ReqType) : ContractViews.VenueView,
     okhttp3.Callback {
 
     private var databaseInstance: AppDatabase = AppDatabase.getInstance(context)
-    private var req: DataClass? = validateData(type)
+    private var req: DataClass? = getInstance(type)
 
     private fun setReq(): VenueRequest? {
         val request = this.req as? VenueRequest
@@ -28,11 +30,26 @@ class PresenterVenue(var context: Context, type: ReqType) : ContractViews.VenueV
             databaseInstance.venueDao,
             databaseInstance.eventDao,
             databaseInstance.performerDao,
+            databaseInstance.userVenueDAO,
+            databaseInstance.userPerformersDAO,
+            databaseInstance.userEventsDAO,
             databaseInstance.userDao
         )
         return request
     }
 
+    fun validateInput (type: EventType, input: String):Boolean{
+        var result :Boolean = false
+        if(type == EventType.ID){
+            for (element in input){
+                if(!element.isDigit()){
+                    return result
+                }
+            }
+            result =true
+        }
+        return result
+    }
     override fun getVenue(type: VenueType, keyword: String) {
         when (type) {
             VenueType.ID -> getById(keyword, ::displayResult)
@@ -53,23 +70,33 @@ class PresenterVenue(var context: Context, type: ReqType) : ContractViews.VenueV
     }
 
     override fun onResponse(call: Call, response: Response) {
-        displayResult(response.toString())
+        if (response.toString() == "") {
+
+            /*
+            CustomDialog.newInstance().show((AppCompatActivity)context, CustomDialog.TAG)
+            //dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog.setCancelable(false)
+            dialog.setContentView(R.layout.activity_no_events)
+            dialog.show()
+
+             */
+            val intent = Intent(context, NoEventsActivity::class.java)
+            context.startActivity(intent)
+        } else {
+            displayResult(response.toString())
+        }
+
     }
 
-    private fun validateData(type: ReqType): DataClass? {
-        //add validation for request type
-        //throw an error
+    private fun getInstance(type: ReqType): DataClass? {
         return RequestFactory().getClass(type)!!
-
     }
 
     override fun getVenueByType(type: VenueType, keyword: String, displayRes: (String) -> Unit) {
-
-        //val venueModel = req as? VenueRequest
         setReq()?.getVenueByType(type, keyword, displayRes)
     }
 
-    fun getVenueList(): MutableList<Venue>? {
+    private fun getVenueList(): MutableList<Venue>? {
         return setReq()?.venueList
     }
 
@@ -81,7 +108,7 @@ class PresenterVenue(var context: Context, type: ReqType) : ContractViews.VenueV
         setReq()?.getByKeyword(keyword, displayRes)
     }
 
-    override fun onDestroy() {
-        //view = null
+    fun addVenue(venue:Venue){
+        setReq()?.addVenue(venue)
     }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -69,7 +70,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/text_country" />
 
             <ToggleButton
-                android:id="@+id/button_favorite"
+                android:id="@+id/button_favorite_venue"
                 android:layout_width="28dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="8dp"
@@ -82,11 +83,11 @@
                 android:textOn=""
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/learn_more"
+                app:layout_constraintStart_toEndOf="@+id/learn_more_venue"
                 app:layout_constraintTop_toBottomOf="@+id/text_name" />
 
             <Button
-                android:id="@+id/learn_more"
+                android:id="@+id/learn_more_venue"
                 android:layout_width="135dp"
                 android:layout_height="44dp"
 
@@ -103,7 +104,7 @@
                 android:visibility="visible"
                 app:iconTint="#FFFFFF"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/button_favorite"
+                app:layout_constraintEnd_toStartOf="@+id/button_favorite_venue"
                 app:layout_constraintStart_toEndOf="@+id/text_city"
                 app:layout_constraintTop_toBottomOf="@+id/text_name"
                 tools:visibility="visible" />

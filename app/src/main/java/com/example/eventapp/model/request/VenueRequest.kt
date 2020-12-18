@@ -1,5 +1,6 @@
 package com.example.eventapp.model.request
 
+import com.example.eventapp.database.model.Venue
 import com.example.eventapp.model.enumTypes.VenueType
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
@@ -14,6 +15,9 @@ class VenueRequest(
     private val apiUrl: String,
     private val client: OkHttpClient,
 ) : DataClass() {
+    fun addVenue(venue: Venue) {
+        dataRepo.addVenue(venue)
+    }
 
     fun getVenueByType(type: VenueType, keyword: String, callback: (String) -> Unit) {
         //https://api.seatgeek.com/2/venues?postal_code=90210
@@ -45,9 +49,14 @@ class VenueRequest(
                     for (obj in venues.get("venues").asJsonArray) {
 
                         val newObj = gson.fromJson(obj, JsonObject::class.java).asJsonObject
+                        val newVenue = getVenueInfo(newObj)
+                        if (newVenue == null) {
+                            callback(newVenue?.toString().orEmpty())
+                            return
+                        }
 
-                        venueList.add(getVenueInfo(newObj))
-                        dataRepo.addVenue(getVenueInfo(newObj))
+                        venueList.add(newVenue)
+                        dataRepo.addVenue(newVenue)
                     }
                     callback(venueList.toString())
                 }
@@ -82,8 +91,14 @@ class VenueRequest(
 
                         val newObj = gson.fromJson(obj, JsonObject::class.java).asJsonObject
 
-                        venueList.add(getVenueInfo(newObj))
-                        dataRepo.addVenue(getVenueInfo(newObj))
+                        val newVenue = getVenueInfo(newObj)
+                        if (newVenue == null) {
+                            callback(newVenue?.toString().orEmpty())
+                            return
+                        }
+
+                        venueList.add(newVenue)
+                        dataRepo.addVenue(newVenue)
                     }
                     callback(venueList.toString())
                 }
@@ -114,8 +129,15 @@ class VenueRequest(
                     val body = response.body?.string()
                     val gson = GsonBuilder().setPrettyPrinting().create()
                     venue = gson.fromJson(body, JsonObject::class.java).asJsonObject
-                    dataRepo.addVenue(getVenueInfo(venue))
-                    callback(getVenueInfo(venue).toString())
+                    val newVenue = getVenueInfo(venue)
+                    if (newVenue == null) {
+                        callback(newVenue?.toString().orEmpty())
+                        return
+                    }
+
+                    venueList.add(newVenue)
+                    dataRepo.addVenue(newVenue)
+                    callback(venueList.toString())
                 }
             }
         })

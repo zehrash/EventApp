@@ -4,18 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.eventapp.database.dao.EventDAO
-import com.example.eventapp.database.dao.PerformerDAO
-import com.example.eventapp.database.dao.UserDAO
-import com.example.eventapp.database.dao.VenueDAO
-import com.example.eventapp.database.model.Event
-import com.example.eventapp.database.model.Performer
-import com.example.eventapp.database.model.User
-import com.example.eventapp.database.model.Venue
+import com.example.eventapp.database.dao.*
+import com.example.eventapp.database.model.*
 
 @Database(
-    entities = [Venue::class, Performer::class, Event::class, User::class],
-    version = 5,
+    entities = [Venue::class, Performer::class, Event::class, UserEvents::class, UserPerformers::class, UserVenues::class, User::class],
+    version = 15,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -23,6 +17,9 @@ abstract class AppDatabase : RoomDatabase() {
     abstract val venueDao: VenueDAO
     abstract val performerDao: PerformerDAO
     abstract val eventDao: EventDAO
+    abstract val userVenueDAO: UserVenuesDAO
+    abstract val userEventsDAO: UserEventsDAO
+    abstract val userPerformersDAO: UserPerformersDAO
     abstract val userDao: UserDAO
 
     companion object {

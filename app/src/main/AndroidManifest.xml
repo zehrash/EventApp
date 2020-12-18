@@ -15,23 +15,43 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:node="merge">
-        <activity android:name=".view.NoEventsActivity" />
 
-        <activity android:name=".view.event.EventsResultActivity" />
-        <activity android:name=".view.performer.PerformerResultActivity" />
-        <activity android:name=".view.OptionsActivity" />
-        <activity android:name=".view.venue.VenueResultActivity" />
-        <activity android:name=".view.performer.PerformerActivity" />
-        <activity android:name=".view.event.EventActivity" />
-        <activity android:name=".view.venue.VenueActivity" />
+
+
+        <activity android:name=".view.main.MainActivity"
+            android:screenOrientation = "portrait"/>
+        <activity android:name=".view.profile.ProfileActivity"
+            android:screenOrientation = "portrait"/>
+        <activity android:name=".view.home.HomeActivity"
+            android:screenOrientation = "portrait"/>
+        <activity android:name=".view.LoginActivity"
+            android:screenOrientation = "portrait"/>
+        <activity android:name=".view.profile.Favourites"
+            android:screenOrientation = "portrait"/>
+        <activity android:name=".view.NoEventsActivity"
+            android:screenOrientation = "portrait"/>
+        <activity android:name=".view.event.EventsResultActivity"
+            android:screenOrientation = "portrait"/>
+        <activity android:name=".view.performer.PerformerResultActivity"
+            android:screenOrientation = "portrait"/>
+        <activity android:name=".view.search.OptionsActivity"
+            android:screenOrientation = "portrait"/>
+        <activity android:name=".view.venue.VenueResultActivity"
+            android:screenOrientation = "portrait"/>
+        <activity android:name=".view.performer.PerformerActivity"
+            android:screenOrientation = "portrait"/>
+        <activity android:name=".view.event.EventActivity"
+            android:screenOrientation = "portrait"/>
+        <activity android:name=".view.venue.VenueActivity"
+            android:screenOrientation = "portrait"/>
         <activity android:name=".view.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
-        <activity android:name=".view.MainActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

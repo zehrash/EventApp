@@ -20,8 +20,7 @@ class EventsResultActivity : AppCompatActivity() {
 
         val events: ArrayList<Event>? = intent.getParcelableArrayListExtra("event")
         if (eventRecyclerViewAdapter == null) {
-            recyclerView = findViewById<RecyclerView>(R.id.recyclerView_event)
-            // layoutManager = new LinearLayoutManager(this);
+            recyclerView = findViewById(R.id.recyclerView_event)
             recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         }
         val rvAdapter = EventRecyclerViewAdapter(this, events)

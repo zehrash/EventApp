@@ -1,18 +1,9 @@
 package com.example.eventapp.model.request
 
-import android.app.usage.UsageEvents
-import com.example.eventapp.database.model.Event
-
-import com.example.eventapp.model.enumTypes.EnumTypeInt
-import com.example.eventapp.model.enumTypes.PerformerType
-import com.example.eventapp.model.enumTypes.VenueType
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
-import kotlinx.coroutines.newFixedThreadPoolContext
 import okhttp3.*
 import java.io.IOException
-import java.lang.NullPointerException
-import java.util.*
 
 class EventRequest(
     private val apiKey: String,
@@ -38,19 +29,17 @@ class EventRequest(
                 event = gson.fromJson(body, JsonObject::class.java).asJsonObject
                 val newEvent = getEventInfo(event)
 
-                eventList.add(newEvent!!)
-                /*
-                Try-catch needs to used.
-                Json from request can be empty and method throws nullpointer exception
-                which has to be caught and no-result-fragment must be called
-                Check how to to add to  custom checked exception or check if event is null
-                 */
+                if (newEvent == null) {
+                    callback(newEvent?.toString().orEmpty())
+                    return
+                }
+
+                eventList.add(newEvent)
                 dataRepo.addEvent(newEvent)
                 callback(eventList.toString())
             }
         })
     }
-
 
     fun getEventByPerformerID(keyword: String, callback: (String) -> Unit) {
         val url: String =
@@ -67,10 +56,15 @@ class EventRequest(
                 val body = response.body?.string()
                 val gson = GsonBuilder().setPrettyPrinting().create()
                 event = gson.fromJson(body, JsonObject::class.java).asJsonObject
+                val newEvent = getEventInfo(event)
 
-                eventList.add(getEventInfo(event)!!)
-                dataRepo.addEvent(getEventInfo(event)!!)
+                if (newEvent == null) {
+                    callback(newEvent?.toString().orEmpty())
+                    return
+                }
 
+                eventList.add(newEvent)
+                dataRepo.addEvent(newEvent)
                 callback(eventList.toString())
             }
         })
@@ -94,7 +88,12 @@ class EventRequest(
                 event = gson.fromJson(body, JsonObject::class.java).asJsonObject
 
                 val newEvent = getEventInfo(event)
-                eventList.add(newEvent!!)
+                if (newEvent == null) {
+                    callback(newEvent?.toString().orEmpty())
+                    return
+                }
+
+                eventList.add(newEvent)
                 dataRepo.addEvent(newEvent)
                 callback(newEvent.toString())
             }
@@ -117,8 +116,14 @@ class EventRequest(
                 events = gson.fromJson(body, JsonObject::class.java).asJsonObject
                 for (obj in events.get("events").asJsonArray) {
                     val newObj = gson.fromJson(obj, JsonObject::class.java).asJsonObject
-                    eventList.add(getEventInfo(newObj)!!)
-                    dataRepo.addEvent(getEventInfo(newObj)!!)
+                    val newEvent = getEventInfo(newObj)
+                    if (newEvent == null) {
+                        callback(newEvent?.toString().orEmpty())
+                        return
+                    }
+
+                    eventList.add(newEvent)
+                    dataRepo.addEvent(newEvent)
                 }
                 callback(eventList.toString())
             }

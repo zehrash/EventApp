@@ -1,9 +1,11 @@
 package com.example.eventapp.presenter
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.view.Window
+import bolts.Bolts
 import com.example.eventapp.R
 import com.example.eventapp.database.AppDatabase
 import com.example.eventapp.database.EventRepository
@@ -12,19 +14,18 @@ import com.example.eventapp.model.enumTypes.EventType
 import com.example.eventapp.model.enumTypes.ReqType
 import com.example.eventapp.model.request.DataClass
 import com.example.eventapp.model.request.EventRequest
-import com.example.eventapp.model.request.VenueRequest
+import com.example.eventapp.view.NoEventsActivity
 import com.example.eventapp.view.event.EventsResultActivity
-import com.example.eventapp.view.performer.PerformerResultActivity
 import okhttp3.Call
 import okhttp3.Response
 import java.io.IOException
 import java.util.ArrayList
 
-class PresenterEvent(var context: Context, type: ReqType) : ContractViews.EventView,
+class EventPresenter(var context: Context, type: ReqType) : ContractViews.EventView,
     okhttp3.Callback {
 
     private var databaseInstance: AppDatabase = AppDatabase.getInstance(context)
-    private var req: DataClass? = validateData(type)
+    private var req: DataClass? = getInstance(type)
 
 
     private fun setReq(): EventRequest? {
@@ -34,9 +35,25 @@ class PresenterEvent(var context: Context, type: ReqType) : ContractViews.EventV
             databaseInstance.venueDao,
             databaseInstance.eventDao,
             databaseInstance.performerDao,
+            databaseInstance.userVenueDAO,
+            databaseInstance.userPerformersDAO,
+            databaseInstance.userEventsDAO,
             databaseInstance.userDao
         )
         return request
+    }
+
+    fun validateInput (type: EventType, input: String):Boolean{
+        var result :Boolean = false
+        if(type == EventType.ID){
+            for (element in input){
+                if(!element.isDigit()){
+                    return result
+                }
+            }
+            result =true
+        }
+        return result
     }
 
     override fun getEvent(type: EventType, keyword: String) {
@@ -48,18 +65,28 @@ class PresenterEvent(var context: Context, type: ReqType) : ContractViews.EventV
         }
     }
 
-    private fun validateData(type: ReqType): DataClass? {
-        //add validation for request type
-        //throw an error
+    private fun getInstance(type: ReqType): DataClass? {
         return RequestFactory().getClass(type)!!
-
     }
 
     override fun displayResult(result: String) {
-        val eventArr = getEventList() as ArrayList<Event>
-        val intent =
-            Intent(context, EventsResultActivity::class.java).putExtra("event", eventArr)
-        context.startActivity(intent)
+        if (result == "") {
+            /*
+            CustomDialog.newInstance().show((AppCompatActivity)context, CustomDialog.TAG)
+            //dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog.setCancelable(false)
+            dialog.setContentView(R.layout.activity_no_events)
+            dialog.show()
+
+             */
+            val intent = Intent(context, NoEventsActivity::class.java)
+            context.startActivity(intent)
+        }
+        else {
+            val eventArr = getEventList() as ArrayList<Event>
+            val intent = Intent(context, EventsResultActivity::class.java).putExtra("event", eventArr)
+            context.startActivity(intent)
+        }
     }
 
     private fun getEventList(): MutableList<Event>? {
@@ -98,7 +125,25 @@ class PresenterEvent(var context: Context, type: ReqType) : ContractViews.EventV
 
     }
 
+    @SuppressLint("RestrictedApi")
     override fun onResponse(call: Call, response: Response) {
-        displayResult(response.toString())
+
+        if (response.toString() == "") {
+
+            /*
+            CustomDialog.newInstance().show((AppCompatActivity)context, CustomDialog.TAG)
+            //dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog.setCancelable(false)
+            dialog.setContentView(R.layout.activity_no_events)
+            dialog.show()
+
+             */
+            val intent = Intent(context, NoEventsActivity::class.java)
+            context.startActivity(intent)
+        } else {
+            displayResult(response.toString())
+        }
+
+
     }
 }

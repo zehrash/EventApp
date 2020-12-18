@@ -29,7 +29,13 @@
     <string name="slug">SLUG</string>
     <string name="learn_more">Learn more</string>
     <string name="type">TYPE</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="performers">PERFORMERS</string>
+    <string name="venues">VENUES</string>
+    <string name="google">google</string>
+    <string name="facebook">facebook</string>
+    <string name="home">Home</string>
+    <string name="favourites">Favourites</string>
+    <string name="profile">Profile</string>
 
 </resources>

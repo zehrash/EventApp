@@ -11,20 +11,16 @@ import kotlinx.serialization.StringFormat
 @Entity(tableName = "venue_table")
 data class Venue(
 
-
-
     @ColumnInfo(name = "venue_city")
     val city: String,
     @ColumnInfo(name = "venue_state")
     val state: String,
     @ColumnInfo(name = "venue_country")
     val country: String,
-
     @ColumnInfo(name = "venue_name")
     val name: String,
 
     @PrimaryKey
     @ColumnInfo(name = "venue_id", index = true)
     val id: String,
-
-    ) : Parcelable
+) : Parcelable

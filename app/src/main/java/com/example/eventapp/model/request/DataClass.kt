@@ -18,7 +18,11 @@ abstract class DataClass {
     var venueList: MutableList<Venue> = mutableListOf()
     var performerList: MutableList<Performer> = mutableListOf()
 
-    fun getPerformerInfo(event: JsonObject): Performer {
+    fun getPerformerInfo(event: JsonObject): Performer? {
+
+        if (event.get("id") == null) {
+            return null
+        }
         lateinit var name: String
         lateinit var id: String
         lateinit var type: String
@@ -35,7 +39,10 @@ abstract class DataClass {
         return Performer(id, name, type, slug)
     }
 
-    fun getVenueInfo(event: JsonObject): Venue {
+    fun getVenueInfo(event: JsonObject): Venue? {
+        if (event.get("city") == null) {
+            return null
+        }
         lateinit var city: String
         lateinit var state: String
         lateinit var country: String
@@ -44,6 +51,7 @@ abstract class DataClass {
 
 
         for ((key, value) in event.entrySet()) {
+
             when (key) {
                 "city" -> city = value.toString()
                 "state" -> state = value.toString()
@@ -58,27 +66,27 @@ abstract class DataClass {
     fun getEventInfo(event: JsonObject): Event? {
 
         lateinit var performer: String
-       try {
+        if (event.get("title") == null) {
+            return null
+        }
 
-           val title: String = event.get("title").toString()
-           val id: String = event.get("id").toString()
+        val title: String = event.get("title").toString()
+        val id: String = event.get("id").toString()
 
-           val venueObj = event.get("venue").asJsonObject
-           val venue: Venue = getVenueInfo(venueObj)
+        val venueObj = event.get("venue").asJsonObject
+        val venue: Venue = getVenueInfo(venueObj)!!
 
-           val performers = event.get("performers").asJsonArray
-           for (obj in performers) {
-               val newObj = obj.asJsonObject.entrySet()
-               for ((key, value) in newObj) {
-                   when (key) {
-                       "id" -> performer = value.toString()
-                   }
-               }
-           }
-           return Event(id, title, performer, venue.id)
-       }catch (e:NullPointerException){
-           return null
-       }
+        val performers = event.get("performers").asJsonArray
+        for (obj in performers) {
+            val newObj = obj.asJsonObject.entrySet()
+            for ((key, value) in newObj) {
+                when (key) {
+                    "id" -> performer = value.toString()
+                }
+            }
+        }
+        return Event(id, title, performer, venue.id)
+
     }
 
     abstract fun getByKeyword(keyword: String, callback: (String) -> Unit)

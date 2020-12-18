@@ -4,29 +4,27 @@ import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.view.Window
-import android.widget.Button
-import android.widget.TextView
 import com.example.eventapp.R
 import com.example.eventapp.database.AppDatabase
 import com.example.eventapp.database.EventRepository
 import com.example.eventapp.database.model.Performer
+import com.example.eventapp.model.enumTypes.EventType
 import com.example.eventapp.model.enumTypes.PerformerType
 import com.example.eventapp.model.enumTypes.ReqType
 import com.example.eventapp.model.request.DataClass
 import com.example.eventapp.model.request.PerformerRequest
-import com.example.eventapp.model.request.VenueRequest
-import com.example.eventapp.view.CustomDialog
+import com.example.eventapp.view.NoEventsActivity
 import com.example.eventapp.view.performer.PerformerResultActivity
 import okhttp3.Call
 import okhttp3.Response
 import java.io.IOException
 import java.util.ArrayList
 
-class PresenterPerformer(var context: Context, type: ReqType) : ContractViews.PerformerView,
+class PerformerPresenter(var context: Context, type: ReqType) : ContractViews.PerformerView,
     okhttp3.Callback {
 
     private var databaseInstance: AppDatabase = AppDatabase.getInstance(context)
-    private var req: DataClass? = validateData(type)
+    private var req: DataClass? = getInstance(type)
 
     private fun setReq(): PerformerRequest? {
         val request = this.req as? PerformerRequest
@@ -35,14 +33,28 @@ class PresenterPerformer(var context: Context, type: ReqType) : ContractViews.Pe
             databaseInstance.venueDao,
             databaseInstance.eventDao,
             databaseInstance.performerDao,
+            databaseInstance.userVenueDAO,
+            databaseInstance.userPerformersDAO,
+            databaseInstance.userEventsDAO,
             databaseInstance.userDao
         )
         return request
     }
 
-    private fun validateData(type: ReqType): DataClass? {
-        //add validation for request type
-        //throw an error
+    fun validateInput(type: EventType, input: String): Boolean {
+        var result: Boolean = false
+        if (type == EventType.ID) {
+            for (element in input) {
+                if (!element.isDigit()) {
+                    return result
+                }
+            }
+            result = true
+        }
+        return result
+    }
+
+    private fun getInstance(type: ReqType): DataClass? {
         return RequestFactory().getClass(type)!!
     }
 
@@ -63,8 +75,24 @@ class PresenterPerformer(var context: Context, type: ReqType) : ContractViews.Pe
     }
 
     override fun onResponse(call: Call, response: Response) {
-        displayResult(response.toString())
+
+        if (response.toString() == "") {
+
+            /*
+            CustomDialog.newInstance().show((AppCompatActivity)context, CustomDialog.TAG)
+            //dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog.setCancelable(false)
+            dialog.setContentView(R.layout.activity_no_events)
+            dialog.show()
+
+             */
+            val intent = Intent(context, NoEventsActivity::class.java)
+            context.startActivity(intent)
+        } else {
+            displayResult(response.toString())
+        }
     }
+
 
     private fun getPerformerList(): MutableList<Performer>? {
         return setReq()?.performerList
@@ -87,11 +115,11 @@ class PresenterPerformer(var context: Context, type: ReqType) : ContractViews.Pe
     }
 
     override fun getByID(id: String, displayRes: (String) -> Unit) {
-        req?.getByID(id, displayRes)
+        setReq()?.getByID(id, displayRes)
     }
 
     override fun getByKeyword(keyword: String, displayRes: (String) -> Unit) {
-        req?.getByKeyword(keyword, displayRes)
+        setReq()?.getByKeyword(keyword, displayRes)
     }
 
     override fun getPerformerByGenre(keyword: String, displayRes: (String) -> Unit) {

@@ -1,6 +1,6 @@
 package com.example.eventapp.model.enumTypes
 
-enum class PerformerType: EnumTypeInt {
+enum class PerformerType{
     ID,
     GENRES,
     SLUG,

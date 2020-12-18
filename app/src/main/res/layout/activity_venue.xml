@@ -1,36 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.venue.VenueActivity">
 
+    <ToggleButton
+        android:id="@+id/button_favorite_venue"
+        android:layout_width="43dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="-180dp"
+        android:background="@drawable/button_favorite"
+        android:checked="false"
+        android:text=""
+        android:textOff=""
+        android:textOn="" />
+
+
+
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="280dp"
-        android:layout_height="203dp"
+        android:layout_width="wrap_content"
+        android:layout_height="141dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="110dp"
         android:layout_marginTop="69dp"
         android:layout_marginBottom="459dp"
+        app:layout_anchor="@+id/imageView"
+        app:layout_anchorGravity="top|center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/unnamed" />
+        app:srcCompat="@drawable/logo" />
 
     <TextView
         android:id="@+id/venue_title"
         android:layout_width="267dp"
         android:layout_height="46dp"
-        android:layout_marginStart="77dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="70dp"
         android:layout_marginTop="45dp"
         android:layout_marginEnd="67dp"
-        android:layout_marginBottom="368dp"
+        android:layout_marginBottom="120dp"
         android:fontFamily="@font/cabin_sketch"
         android:text="Title"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
+        android:maxLines="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,8 +60,9 @@
         android:id="@+id/city"
         android:layout_width="264dp"
         android:layout_height="46dp"
+        android:layout_gravity="center"
         android:layout_marginTop="27dp"
-        android:layout_marginBottom="295dp"
+        android:layout_marginBottom="-150dp"
         android:fontFamily="@font/cabin_sketch"
         android:text="@string/city"
         android:textAlignment="center"
@@ -58,6 +79,8 @@
         android:id="@+id/country"
         android:layout_width="264dp"
         android:layout_height="46dp"
+        android:layout_gravity="center|center_vertical"
+        android:layout_marginBottom="-300dp"
         android:fontFamily="@font/cabin_sketch"
         android:text="@string/country"
         android:textAlignment="center"
@@ -74,6 +97,8 @@
         android:id="@+id/id"
         android:layout_width="264dp"
         android:layout_height="46dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="-50dp"
         android:fontFamily="@font/cabin_sketch"
         android:text="@string/id"
         android:textAlignment="center"
@@ -88,22 +113,57 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"
-        android:layout_width="75dp"
-        android:layout_height="65dp"
-        android:layout_marginTop="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="170dp"
+        android:layout_marginTop="550dp"
         android:layout_marginBottom="44dp"
-        android:background="#D75A4A"
-        android:backgroundTint="#D75A4A"
+        android:background="@color/primaryLightColor"
+        android:backgroundTint="@color/primaryLightColor"
         android:clickable="true"
         android:focusable="true"
+        android:foregroundGravity="center"
         android:src="@drawable/ic_baseline_music_note_24"
         android:tint="#D75A4A"
-        app:backgroundTint="#D75A4A"
-        android:foregroundGravity="center"
+        app:layout_anchor="@id/bottomAppBar"
+        app:layout_anchorGravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/id">
 
     </com.google.android.material.floatingactionbutton.FloatingActionButton>
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottomAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="110dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/secondaryColor"
+        android:visibility="visible"
+        app:backgroundTint="#FFFFFF"
+        app:buttonGravity="bottom"
+        app:fabCradleMargin="10dp"
+        app:fabCradleRoundedCornerRadius="10dp"
+        app:fabCradleVerticalOffset="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="BottomAppBar,MissingConstraints">
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigationView"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@android:color/transparent"
+            android:theme="@style/BottomNavigationTheme"
+            android:visibility="visible"
+            app:menu="@menu/bottom_nav_menu"
+            tools:layout_editor_absoluteX="16dp" />
+    </com.google.android.material.bottomappbar.BottomAppBar>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
