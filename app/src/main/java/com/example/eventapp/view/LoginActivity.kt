@@ -80,7 +80,7 @@ class LoginActivity : AppCompatActivity() {
                //     PresenterUser.setDatabase()
                     userPresenter.setIsLoggedIn(false, auth.currentUser?.email!!)
                 }
-                FBLoginButton.performClick()
+               // FBLoginButton.performClick()
             }
         }
 
@@ -95,7 +95,7 @@ class LoginActivity : AppCompatActivity() {
                   //  PresenterUser.setDatabase()
                     userPresenter.setIsLoggedIn(false, auth.currentUser?.email!!)
                 }
-                GLoginButton.performClick()
+             //   GLoginButton.performClick()
             }
         }
 

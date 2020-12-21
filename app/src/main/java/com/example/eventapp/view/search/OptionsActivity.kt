@@ -20,6 +20,7 @@ import com.example.eventapp.view.profile.Favourites
 import com.example.eventapp.view.profile.ProfileActivity
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.activity_options.*
+import kotlin.NullPointerException
 
 
 class OptionsActivity : AppCompatActivity() {
@@ -53,13 +54,20 @@ class OptionsActivity : AppCompatActivity() {
                 lateinit var chip: Chip
                 Toast.makeText(this, "Don't forget to choose searching option.", Toast.LENGTH_LONG)
                     .show()
+
                 chip_group1.setOnCheckedChangeListener { chip_group1, i ->
 
-                    chip = chip_group1.findViewById(i)
-                    Toast.makeText(this, "Chip is " + chip.text, Toast.LENGTH_LONG).show()
-                    val searchText: String = search_text1.text.toString()
+                    try {
+                        chip = chip_group1.findViewById(i)
+                    } catch (e: NullPointerException) {
+                        Toast.makeText(this, "Please select another filter", Toast.LENGTH_LONG)
+                            .show()
+                    }
 
+
+                    Toast.makeText(this, "Chip is " + chip.text, Toast.LENGTH_LONG).show()
                     search_button1.setOnClickListener {
+                        val searchText: String = search_text1.text.toString()
                         if (searchText.isNotEmpty()) {
                             if (chip.text == EventType.ID.toString()) {
                                 if (presenter.validateInput(
@@ -118,12 +126,16 @@ class OptionsActivity : AppCompatActivity() {
                     .show()
 
                 chip_group2.setOnCheckedChangeListener { chip_group2, i ->
+                    try {
+                        chip = chip_group2.findViewById(i)
+                    } catch (e: NullPointerException) {
+                        Toast.makeText(this, "Please select another filter", Toast.LENGTH_LONG)
+                            .show()
+                    }
 
-                    chip = chip_group2.findViewById(i)
-                    val searchText: String = search_text2.text.toString()
                     Toast.makeText(this, "Chip is " + chip.text, Toast.LENGTH_LONG).show()
                     search_button2.setOnClickListener {
-
+                        val searchText: String = search_text2.text.toString()
                         if (searchText.isNotEmpty()) {
                             if (chip.text == EventType.ID.toString()) {
                                 if (presenter.validateInput(
@@ -191,13 +203,20 @@ class OptionsActivity : AppCompatActivity() {
 
                 chip_group3.setOnCheckedChangeListener { chip_group3, i ->
 
-                    chip = chip_group3.findViewById(i)
+                    try {
+                        chip = chip_group3.findViewById(i)
+                    } catch (e: NullPointerException) {
+                        Toast.makeText(this, "Please select another filter", Toast.LENGTH_LONG)
+                            .show()
+                    }
 
 
-                    val searchText: String = search_text3.text.toString()
+
+
                     Toast.makeText(this, "Chip is " + chip.text, Toast.LENGTH_LONG).show()
-                    search_button3.setOnClickListener {
 
+                    search_button3.setOnClickListener {
+                        val searchText: String = search_text3.text.toString()
                         if (searchText.isNotEmpty()) {
                             if (chip.text == EventType.ID.toString()) {
                                 if (presenter.validateInput(
