@@ -3,11 +3,11 @@ package com.example.eventapp.view
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.AsyncTask
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.eventapp.R
 import com.example.eventapp.presenter.UserPresenter
 import com.example.eventapp.view.search.OptionsActivity
@@ -17,6 +17,8 @@ import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.material.bottomappbar.BottomAppBarTopEdgeTreatment
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapePath
@@ -40,7 +42,6 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.new_login)
 
-       // val sharedPrefs: UserSharedPrefs = UserSharedPrefs()
 
         lateinit var userPresenter :UserPresenter
 
@@ -230,20 +231,32 @@ class LoginActivity : AppCompatActivity() {
                                         )
                                         profileTracker.stopTracking()
                                         val token = AccessToken.getCurrentAccessToken()
-                                        var credential = FacebookAuthProvider.getCredential(token.token)
-                                        auth.signInWithCredential(credential).addOnCompleteListener(this@LoginActivity) { task ->
-                                                if (task.isSuccessful) {
-                                                    Log.e("Firebase", "signInWithCredential:success")
-                                                    updateUI(currentProfile)
+                                        var credential =
+                                            FacebookAuthProvider.getCredential(token.token)
+                                        auth.signInWithCredential(credential).addOnCompleteListener(
+                                            this@LoginActivity
+                                        ) { task ->
+                                            if (task.isSuccessful) {
+                                                Log.e(
+                                                    "Firebase",
+                                                    "signInWithCredential:success"
+                                                )
+                                                updateUI(currentProfile)
 
-                                                } else {
-                                                    Log.e(
-                                                        "Firebase", "signInWithCredential:failure", task.exception)
-                                                    Toast.makeText(
-                                                        baseContext, "Authentication failed.", Toast.LENGTH_SHORT).show()
-                                                    updateUI()
-                                                }
+                                            } else {
+                                                Log.e(
+                                                    "Firebase",
+                                                    "signInWithCredential:failure",
+                                                    task.exception
+                                                )
+                                                Toast.makeText(
+                                                    baseContext,
+                                                    "Authentication failed.",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                                updateUI()
                                             }
+                                        }
                                     }
                                 }
 

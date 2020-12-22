@@ -8,11 +8,11 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="203dp"
-        android:layout_height="124dp"
+        android:layout_width="220dp"
+        android:layout_height="229dp"
         android:layout_marginStart="56dp"
         android:layout_marginEnd="297dp"
-        android:text="Woooors"
+        android:text="Location functionality in development"
         android:textColor="@color/primaryTextColor"
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"
